@@ -7,6 +7,12 @@ A react widget that can be resized and rotated via a handler.
 
 `npm install --save react-resizable-rotatable-draggable`
 
+
+Then you will need to install peer dependency
+
+
+`npm install --save styled-components`
+
 ### Usage
 
 ```javascript
