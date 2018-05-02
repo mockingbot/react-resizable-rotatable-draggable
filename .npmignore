@@ -1,0 +1,11 @@
+# distribute file
+**/*-gitignore/**
+**/*-gitignore*
+/*.tgz
+
+/*.lock
+/*lock.json
+/.*
+/src
+/example
+/*.config.js
