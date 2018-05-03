@@ -46,13 +46,12 @@ class AppExample extends Component {
     })
   }
 
-  handleRotateEnd = () => console.log('aa')
-handleRotateStart = () => console.log("start")
   render () {
     const { width, top, left, height, rotateAngle } = this.state
 
     return (
       <RootDiv className="App">
+        <div>The rectangle will resize at a certain aspect ratio if you press the shift key</div>
         <ResizableRect
           {...{ left, top, width, height, rotateAngle }}
           // aspectRatio={false}
@@ -60,9 +59,9 @@ handleRotateStart = () => console.log("start")
           // minHeight={10}
           zoomable='n, w, s, e, nw, ne, se, sw'
           // rotatable={true}
-          onRotateStart={this.handleRotateStart}
+          // onRotateStart={this.handleRotateStart}
           onRotate={this.handleRotate}
-          onRotateEnd={this.handleRotateEnd}
+          // onRotateEnd={this.handleRotateEnd}
           // onResizeStart={this.handleResizeStart}
           onResize={this.handleResize}
           // onResizeEnd={this.handleUp}
