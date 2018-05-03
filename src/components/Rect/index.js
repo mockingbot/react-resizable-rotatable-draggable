@@ -90,7 +90,7 @@ export default class Rect extends PureComponent {
       document.removeEventListener('mouseup', onUp)
       if (!this._isMouseDown) return
       this._isMouseDown = false
-      this.props.onRoateEnd && this.props.onRoateEnd()
+      this.props.onRotateEnd && this.props.onRotateEnd()
     }
     document.addEventListener('mousemove', onMove)
     document.addEventListener('mouseup', onUp)

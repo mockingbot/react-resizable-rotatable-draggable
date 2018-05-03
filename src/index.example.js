@@ -46,6 +46,8 @@ class AppExample extends Component {
     })
   }
 
+  handleRotateEnd = () => console.log('aa')
+handleRotateStart = () => console.log("start")
   render () {
     const { width, top, left, height, rotateAngle } = this.state
 
@@ -58,9 +60,9 @@ class AppExample extends Component {
           // minHeight={10}
           zoomable='n, w, s, e, nw, ne, se, sw'
           // rotatable={true}
-          // onRotateStart={this.handleRotateStart}
+          onRotateStart={this.handleRotateStart}
           onRotate={this.handleRotate}
-          // onRotateEnd={this.handleRotateEnd}
+          onRotateEnd={this.handleRotateEnd}
           // onResizeStart={this.handleResizeStart}
           onResize={this.handleResize}
           // onResizeEnd={this.handleUp}
