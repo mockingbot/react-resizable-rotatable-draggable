@@ -99,9 +99,10 @@ class ResizableRect extends Component {
 
   render() {
     const styles = tLToCenter(this.props)
-    const { zoomable, rotatable } = this.props
+    const { zoomable, rotatable, parentRotateAngle } = this.props
     return  (
       <Rect zoomable={zoomable} rotatable={rotatable && this.props.onRotate ? true : false} styles={styles}
+        parentRotateAngle={parentRotateAngle}
         onResizeStart={this.props.onResizeStart}
         onResize={this.handleResize}
         onResizeEnd={this.props.onResizeEnd}

@@ -131,7 +131,7 @@ export default class Rect extends PureComponent {
   }
 
   render () {
-    const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } }, zoomable, rotatable } = this.props
+    const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } }, zoomable, rotatable, parentRotateAngle } = this.props
     const style = { width, height, transform: `rotate(${rotateAngle}deg)`, left: centerX - width / 2, top: centerY - height / 2 }
     const direction = zoomable.split(',').map(d => d.trim()).filter(d => d)
 
@@ -145,7 +145,7 @@ export default class Rect extends PureComponent {
       >
         {rotatable && <div className="rotate" onMouseDown={this.startRotate}><i></i></div>}
         {direction.map(d => {
-          const cursor = `${getCursor(rotateAngle, d)}-resize`
+          const cursor = `${getCursor(rotateAngle + parentRotateAngle, d)}-resize`
           return (
             <div key={d} style={{ cursor }} className={`${zoomableMap[d]} resizable-handler`} onMouseDown={(e) => this.startResize(e, cursor)}></div>
           )
