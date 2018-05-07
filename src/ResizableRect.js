@@ -35,6 +35,7 @@ class ResizableRect extends Component {
     height: PropTypes.number.isRequired,
     rotatable: PropTypes.bool,
     rotateAngle: PropTypes.number,
+    parentRotateAngle: PropTypes.number,
     zoomable: PropTypes.string,
     minWidth: PropTypes.number,
     minHeight: PropTypes.number,
@@ -53,6 +54,7 @@ class ResizableRect extends Component {
     onDragEnd: PropTypes.func
   }
   static defaultProps = {
+    parentRotateAngle: 0,
     rotateAngle: 0,
     rotatable: true,
     zoomable: '',
@@ -82,8 +84,8 @@ class ResizableRect extends Component {
 
   handleResize = (length, alpha, rect, type, isShiftKey) => {
     if (!this.props.onResize) return
-    const { rotateAngle, aspectRatio, minWidth, minHeight } = this.props
-    const beta = alpha - degToRadian(rotateAngle)
+    const { rotateAngle, aspectRatio, minWidth, minHeight, parentRotateAngle } = this.props
+    const beta = alpha - degToRadian(rotateAngle + parentRotateAngle)
     const deltaW = length * Math.cos(beta)
     const deltaH = length * Math.sin(beta)
     const ratio = isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio
