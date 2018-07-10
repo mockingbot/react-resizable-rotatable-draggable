@@ -36,6 +36,10 @@ const setHeightAndDeltaH = (height, deltaH, minHeight) => {
 
 export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeight) => {
   let { width, height, centerX, centerY, rotateAngle } = rect
+  const widthFlag = width < 0 ? -1 : 1
+  const heightFlag = height < 0 ? -1 : 1
+  width = Math.abs(width)
+  height = Math.abs(height)
   switch (type) {
     case 'r': {
       const widthAndDeltaW = setWidthAndDeltaW(width, deltaW, minWidth)
@@ -178,8 +182,8 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       centerY
     },
     size: {
-      width,
-      height
+      width: width * widthFlag,
+      height: height * heightFlag
     }
   }
 }

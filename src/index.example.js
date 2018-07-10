@@ -56,8 +56,8 @@ handleRotateStart = () => console.log("start")
         <ResizableRect
           {...{ left, top, width, height, rotateAngle }}
           // aspectRatio={false}
-          // minWidth={-Infinity}
-          // minHeight={-Infinity}
+          minWidth={-Infinity}
+          minHeight={-Infinity}
           zoomable="n, w, s, e, nw, ne, se, sw"
           // rotatable={true}
           onRotateStart={this.handleRotateStart}
