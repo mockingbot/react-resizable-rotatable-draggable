@@ -27,7 +27,8 @@ export default class Rect extends PureComponent {
     onRotateEnd: PropTypes.func,
     onDragStart: PropTypes.func,
     onDrag: PropTypes.func,
-    onDragEnd: PropTypes.func
+    onDragEnd: PropTypes.func,
+    parentRotateAngle: PropTypes.number
   }
 
   setElementRef = ref => this.$element = ref
@@ -132,7 +133,7 @@ export default class Rect extends PureComponent {
 
   render () {
     const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } }, zoomable, rotatable, parentRotateAngle } = this.props
-    const style = { width, height, transform: `rotate(${rotateAngle}deg)`, left: centerX - width / 2, top: centerY - height / 2 }
+    const style = { width: Math.abs(width), height: Math.abs(height), transform: `rotate(${rotateAngle}deg)`, left: centerX - Math.abs(width) / 2, top: centerY - Math.abs(height) / 2 }
     const direction = zoomable.split(',').map(d => d.trim()).filter(d => d)
 
 
