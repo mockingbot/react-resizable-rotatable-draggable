@@ -1,6 +1,6 @@
 {
   "name": "react-resizable-rotatable-draggable",
-  "version": "0.1.8",
+  "version": "0.1.8-dev.1",
   "description": "A rectangle react component which can be resized and rotated",
   "author": "MockingBot",
   "license": "MIT",
@@ -11,13 +11,21 @@
     "resize",
     "rotate"
   ],
-  "main": "lib/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
   "scripts": {
-    "build": "babel ./src --out-dir ./lib --ignore src/index.example.js",
-    "build-dev": "npm run build -- --watch",
-    "build-example": "webpack --config webpack.config.js",
-    "build-example-dev": "cross-env NODE_ENV=development npm run build-example -- --watch",
-    "prepack": "npm run build"
+    "test": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "prepare": "yarn run build",
+    "predeploy": "cd example && yarn install && yarn run build",
+    "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
     "react": "^16",
@@ -25,20 +33,35 @@
     "styled-components": "^3.2.6"
   },
   "devDependencies": {
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "styled-components": "^3.2.6",
-    "@babel/cli": "7.0.0-beta.46",
-    "@babel/core": "7.0.0-beta.46",
-    "@babel/plugin-proposal-class-properties": "7.0.0-beta.46",
-    "@babel/preset-env": "7.0.0-beta.46",
-    "@babel/preset-react": "7.0.0-beta.46",
-    "babel-plugin-styled-components": "^1.5.1",
-    "babel-plugin-minify-replace": "^0.4.0",
-    "babel-plugin-module-resolver": "^3.1.1",
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.1.2",
-    "babel-loader": "8.0.0-beta.2",
-    "cross-env": "^5.1.4"
-  }
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.5",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.0.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "gh-pages": "^1.2.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "^1.1.4",
+    "rollup": "^0.62.0",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-postcss": "^1.6.2",
+    "rollup-plugin-url": "^1.4.0",
+    "styled-components": "^3.4.10"
+  },
+  "files": [
+    "dist"
+  ]
 }

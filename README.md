@@ -1,21 +1,26 @@
 # React-resizable-rotatable-draggable-rectangle
 
+>
+
+[![NPM](https://img.shields.io/npm/v/react-resizable-rotatable-draggable.svg)](https://www.npmjs.com/package/react-resizable-rotatable-draggable) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 A react widget that can be resized and rotated via a handler.
 
 ### Installation
 
-`npm install --save react-resizable-rotatable-draggable`
-
+```bash
+npm install --save react-resizable-rotatable-draggable`
+```
 
 Then you will need to install peer dependency
 
-
-`npm install --save styled-components`
+```bash
+npm install --save styled-components`
+```
 
 ### Usage
 
-```javascript
+```jsx
 import React, { Component } from 'react'
 import ResizableRect from 'react-resizable-rotatable-draggable'
 
@@ -117,3 +122,7 @@ export default App
 |onDragStart  | func                    | //      | //                                    |
 |onDrag       | func                    | //      | (deltaX, deltaY)                      |
 |onDragEnd    | func                    | //      | //                                    |
+
+## License
+
+MIT © [Mockingbot](https://github.com/mockingbot)

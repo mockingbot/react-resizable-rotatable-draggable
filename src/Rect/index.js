@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import { getLength, getAngle, getCursor } from '../../utils'
+import { getLength, getAngle, getCursor } from '../utils'
 import StyledRect from './StyledRect'
 
 const zoomableMap = {
@@ -136,7 +136,6 @@ export default class Rect extends PureComponent {
     const style = { width: Math.abs(width), height: Math.abs(height), transform: `rotate(${rotateAngle}deg)`, left: centerX - Math.abs(width) / 2, top: centerY - Math.abs(height) / 2 }
     const direction = zoomable.split(',').map(d => d.trim()).filter(d => d)
 
-
     return (
       <StyledRect
         innerRef={this.setElementRef}
@@ -144,18 +143,29 @@ export default class Rect extends PureComponent {
         className="rect single-resizer"
         style={style}
       >
-        {rotatable && <div className="rotate" onMouseDown={this.startRotate}><i></i></div>}
-        {direction.map(d => {
-          const cursor = `${getCursor(rotateAngle + parentRotateAngle, d)}-resize`
-          return (
-            <div key={d} style={{ cursor }} className={`${zoomableMap[d]} resizable-handler`} onMouseDown={(e) => this.startResize(e, cursor)}></div>
-          )
-        })}
-        {direction.map(d => {
-          return (
-            <div key={d} className={`${zoomableMap[d]} square`} />
-          )
-        })}
+        {
+          rotatable &&
+          <div className="rotate" onMouseDown={this.startRotate}>
+            <i />
+          </div>
+        }
+
+        {
+          direction.map(d => {
+            const cursor = `${getCursor(rotateAngle + parentRotateAngle, d)}-resize`
+            return (
+              <div key={d} style={{ cursor }} className={`${zoomableMap[d]} resizable-handler`} onMouseDown={(e) => this.startResize(e, cursor)} />
+            )
+          })
+        }
+
+        {
+          direction.map(d => {
+            return (
+              <div key={d} className={`${zoomableMap[d]} square`} />
+            )
+          })
+        }
       </StyledRect>
     )
   }
