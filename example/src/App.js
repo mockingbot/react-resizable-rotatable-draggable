@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import ResizableRect from './ResizableRect'
+
+import Resizer from 'react-resizable-rotatable-draggable'
 import styled from 'styled-components'
 
 const RootDiv = styled.div`
-text-align: center;
+  text-align: center;
 `
 
-class AppExample extends Component {
+export default class App extends Component {
   constructor () {
     super()
     this.state = {
@@ -19,24 +19,17 @@ class AppExample extends Component {
     }
   }
 
-  handleResize = (style, isShiftKey, type) => {
-    let { top, left, width, height } = style
-    top = Math.round(top)
-    left = Math.round(left)
-    width = Math.round(width)
-    height = Math.round(height)
+  handleResize = ({ top, left, width, height }, isShiftKey, type) => {
     this.setState({
-      top,
-      left,
-      width,
-      height
+      top: Math.round(top),
+      left: Math.round(left),
+      width: Math.round(width),
+      height: Math.round(height)
     })
   }
 
   handleRotate = (rotateAngle) => {
-    this.setState({
-      rotateAngle
-    })
+    this.setState({ rotateAngle })
   }
 
   handleDrag = (deltaX, deltaY) => {
@@ -47,14 +40,21 @@ class AppExample extends Component {
   }
 
   handleRotateEnd = () => console.log('aa')
-handleRotateStart = () => console.log("start")
+
+  handleRotateStart = () => console.log('start')
+
   render () {
     const { width, top, left, height, rotateAngle } = this.state
 
     return (
       <RootDiv className="App">
-        <ResizableRect
-          {...{ left, top, width, height, rotateAngle }}
+        <Resizer
+          top={top}
+          left={left}
+          width={width}
+          height={height}
+          rotateAngle={rotateAngle}
+
           // aspectRatio={false}
           minWidth={-Infinity}
           minHeight={-Infinity}
@@ -74,7 +74,3 @@ handleRotateStart = () => console.log("start")
     )
   }
 }
-
-const init = (element) => { ReactDOM.render(<AppExample />, element) }
-
-export { init }
