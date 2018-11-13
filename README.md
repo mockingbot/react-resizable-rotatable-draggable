@@ -15,7 +15,7 @@ npm install --save react-resizable-rotatable-draggable`
 Then you will need to install peer dependency
 
 ```bash
-npm install --save styled-components@"<4"
+npm install --save styled-components
 ```
 
 ### Usage
