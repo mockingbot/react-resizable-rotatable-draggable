@@ -24,7 +24,7 @@
     "build-example": "cd example && npm install && npm run build",
     "publish-dev": "npm publish --tag dev",
     "start": "npm run build-dev",
-    "deploy": "npm run build && npm run build-example && gh-pages -d example/build/dist",
+    "deploy": "npm run build && npm run build-example && gh-pages -d example/dist",
     "prepack": "npm run build"
   },
   "peerDependencies": {
@@ -48,6 +48,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-standard": "^4.0.0",
+    "gh-pages": "^2.0.1",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
