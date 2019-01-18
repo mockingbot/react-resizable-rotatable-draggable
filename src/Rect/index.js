@@ -31,11 +31,11 @@ export default class Rect extends PureComponent {
     parentRotateAngle: PropTypes.number
   }
 
-  setElementRef = ref => this.$element = ref
+  setElementRef = (ref) => { this.$element = ref }
 
   // Drag
   startDrag = (e) => {
-    var { clientX: startX, clientY: startY } = e
+    let { clientX: startX, clientY: startY } = e
     this.props.onDragStart && this.props.onDragStart()
     this._isMouseDown = true
     const onMove = (e) => {
@@ -69,7 +69,7 @@ export default class Rect extends PureComponent {
       x: rect.left + rect.width / 2,
       y: rect.top + rect.height / 2
     }
-    var startVector = {
+    const startVector = {
       x: clientX - center.x,
       y: clientY - center.y
     }
@@ -104,7 +104,7 @@ export default class Rect extends PureComponent {
     const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } } } = this.props
     const { clientX: startX, clientY: startY } = e
     const rect = { width, height, centerX, centerY, rotateAngle }
-    const type = e.target.getAttribute('class').split(' ')[0]
+    const type = e.target.getAttribute('class').split(' ')[ 0 ]
     this.props.onResizeStart && this.props.onResizeStart()
     this._isMouseDown = true
     const onMove = (e) => {
@@ -132,9 +132,24 @@ export default class Rect extends PureComponent {
   }
 
   render () {
-    const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } }, zoomable, rotatable, parentRotateAngle } = this.props
-    const style = { width: Math.abs(width), height: Math.abs(height), transform: `rotate(${rotateAngle}deg)`, left: centerX - Math.abs(width) / 2, top: centerY - Math.abs(height) / 2 }
-    const direction = zoomable.split(',').map(d => d.trim()).filter(d => d)
+    const {
+      styles: {
+        position: { centerX, centerY },
+        size: { width, height },
+        transform: { rotateAngle }
+      },
+      zoomable,
+      rotatable,
+      parentRotateAngle
+    } = this.props
+    const style = {
+      width: Math.abs(width),
+      height: Math.abs(height),
+      transform: `rotate(${rotateAngle}deg)`,
+      left: centerX - Math.abs(width) / 2,
+      top: centerY - Math.abs(height) / 2
+    }
+    const direction = zoomable.split(',').map(d => d.trim()).filter(d => d) // TODO: may be speed up
 
     return (
       <StyledRect
@@ -154,7 +169,7 @@ export default class Rect extends PureComponent {
           direction.map(d => {
             const cursor = `${getCursor(rotateAngle + parentRotateAngle, d)}-resize`
             return (
-              <div key={d} style={{ cursor }} className={`${zoomableMap[d]} resizable-handler`} onMouseDown={(e) => this.startResize(e, cursor)} />
+              <div key={d} style={{ cursor }} className={`${zoomableMap[ d ]} resizable-handler`} onMouseDown={(e) => this.startResize(e, cursor)} />
             )
           })
         }
@@ -162,7 +177,7 @@ export default class Rect extends PureComponent {
         {
           direction.map(d => {
             return (
-              <div key={d} className={`${zoomableMap[d]} square`} />
+              <div key={d} className={`${zoomableMap[ d ]} square`} />
             )
           })
         }
