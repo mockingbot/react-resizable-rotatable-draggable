@@ -1,7 +1,5 @@
 # React-resizable-rotatable-draggable-rectangle
 
->
-
 [![NPM](https://img.shields.io/npm/v/react-resizable-rotatable-draggable.svg)](https://www.npmjs.com/package/react-resizable-rotatable-draggable) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 A react widget that can be resized and rotated via a handler.
@@ -15,7 +13,7 @@ npm install --save react-resizable-rotatable-draggable`
 Then you will need to install peer dependency
 
 ```bash
-npm install --save styled-components@4"
+npm install --save styled-components@4
 ```
 
 ### Usage
@@ -96,33 +94,32 @@ class App extends Component {
 }
 
 export default App
-
 ```
 
 ### Props
 
 | Props       |  Type                   | Default | Example                               |
 |:-----------:|:-----------------------:|:-------:|:-------------------------------------:|
-|left         | number.isRequired       | //      | 10                                    |
-|top          | number.isRequired       | //      | 10                                    |
-|width        | number.isRequired       | //      | 100                                   |
-|height       | number.isRequired       | //      | 100                                   |
+|left         | number.isRequired       |         | 10                                    |
+|top          | number.isRequired       |         | 10                                    |
+|width        | number.isRequired       |         | 100                                   |
+|height       | number.isRequired       |         | 100                                   |
 |rotateAngle  | number                  | 0       | 0                                     |
 |rotatable    | bool                    | true    | true                                  |
 |zoomable     | string                  | ''      | 'n, w, s, e, nw, ne, se, sw'          |
 |minWidth     | number                  | 10      | 0                                     |
 |minHeight    | number                  | 10      | 0                                     |
-|aspectRatio  | number (width / height) | //      | 1(which makes the rectangle a square) |
-|onRotateStart| func                    | //      | //                                    |
-|onRotate     | func                    | //      | (rotateAngle)                         |
-|onRotateEnd  | func                    | //      | //                                    |
-|onResizeStart| func                    | //      | //                                    |
-|onResize     | func                    | //      | (style, isShiftKey, type)             |
-|onResizeEnd  | func                    | //      | //                                    |
-|onDragStart  | func                    | //      | //                                    |
-|onDrag       | func                    | //      | (deltaX, deltaY)                      |
-|onDragEnd    | func                    | //      | //                                    |
+|aspectRatio  | number (width / height) |         | 1(which makes the rectangle a square) |
+|onRotateStart| func                    |         |                                       |
+|onRotate     | func                    |         | (rotateAngle)                         |
+|onRotateEnd  | func                    |         |                                       |
+|onResizeStart| func                    |         |                                       |
+|onResize     | func                    |         | (style, isShiftKey, type)             |
+|onResizeEnd  | func                    |         |                                       |
+|onDragStart  | func                    |         |                                       |
+|onDrag       | func                    |         | (deltaX, deltaY)                      |
+|onDragEnd    | func                    |         |                                       |
 
 ## License
 
-MIT © [Mockingbot](https://github.com/mockingbot)
+MIT © [MockingBot](https://github.com/mockingbot)
