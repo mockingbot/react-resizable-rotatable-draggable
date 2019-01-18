@@ -57,10 +57,15 @@ export default styled.div`
 
   .rotate {
     position: absolute;
-    cursor: pointer;
     left: 50%;
     top: -26px;
-    transform: translateX(-50%);
+    width: 18px;
+    height: 18px;
+    margin-left: -9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
   }
 
   .t,
