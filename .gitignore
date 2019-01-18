@@ -5,7 +5,8 @@ node_modules
 
 # builds
 build
-dist
+/dist
+/example/dist/index.js
 *.tgz
 
 # misc

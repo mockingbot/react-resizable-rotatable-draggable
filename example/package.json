@@ -1,21 +1,13 @@
 {
-  "name": "react-resizable-rotatable-draggable-example",
-  "homepage": "https://mockingbot.github.io/react-resizable-rotatable-draggable",
-  "version": "0.0.0",
-  "license": "MIT",
   "private": true,
-  "dependencies": {
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-resizable-rotatable-draggable": "link:..",
-    "react-scripts": "^1.1.4",
-    "styled-components": "^3.4.10"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "webpack -c webpack.config.js --mode production",
+    "build-dev": "webpack -c webpack.config.js --mode development --watch"
+  },
+  "dependencies": {
+    "babel-loader": "^8.0.5",
+    "react-resizable-rotatable-draggable": "file:../",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
   }
 }
