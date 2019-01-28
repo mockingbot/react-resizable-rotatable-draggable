@@ -17,6 +17,10 @@ const zoomableMap = {
 export default class Rect extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     onResizeStart: PropTypes.func,
     onResize: PropTypes.func,
     onResizeEnd: PropTypes.func,
@@ -138,6 +142,7 @@ export default class Rect extends PureComponent {
 
   render () {
     const {
+      children,
       className,
       styles: {
         position: { centerX, centerY },
@@ -193,6 +198,7 @@ export default class Rect extends PureComponent {
             )
           })
         }
+        {children}
       </StyledRect>
     )
   }
