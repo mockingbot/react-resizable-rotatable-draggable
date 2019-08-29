@@ -25,7 +25,7 @@
     "publish-dev": "npm publish --tag dev",
     "start": "npm run build-dev",
     "deploy": "npm run build && npm run build-example && gh-pages -d example/dist",
-    "prepack": "npm run build"
+    "prepack": "npm install && npm run build"
   },
   "peerDependencies": {
     "prop-types": "^15",
