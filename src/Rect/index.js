@@ -40,7 +40,7 @@ export default class Rect extends PureComponent {
   // Drag
   startDrag = (e) => {
     let { clientX: startX, clientY: startY } = e
-    this.props.onDragStart && this.props.onDragStart()
+    this.props.onDragStart && this.props.onDragStart(e)
     this._isMouseDown = true
     const onMove = (e) => {
       if (!this._isMouseDown) return // patch: fix windows press win key during mouseup issue
@@ -77,7 +77,7 @@ export default class Rect extends PureComponent {
       x: clientX - center.x,
       y: clientY - center.y
     }
-    this.props.onRotateStart && this.props.onRotateStart()
+    this.props.onRotateStart && this.props.onRotateStart(e)
     this._isMouseDown = true
     const onMove = (e) => {
       if (!this._isMouseDown) return // patch: fix windows press win key during mouseup issue
@@ -117,7 +117,7 @@ export default class Rect extends PureComponent {
 
     const rect = { width, height, centerX, centerY, rotateAngle }
     const type = e.target.getAttribute('class').split(' ')[ 0 ]
-    this.props.onResizeStart && this.props.onResizeStart()
+    this.props.onResizeStart && this.props.onResizeStart(e)
     this._isMouseDown = true
     const onMove = (e) => {
       if (!this._isMouseDown) return // patch: fix windows press win key during mouseup issue
