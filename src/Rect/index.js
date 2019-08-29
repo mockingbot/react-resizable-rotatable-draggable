@@ -16,6 +16,10 @@ const zoomableMap = {
 
 export default class Rect extends PureComponent {
   static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     styles: PropTypes.object,
     zoomable: PropTypes.string,
     rotatable: PropTypes.bool,
@@ -101,8 +105,16 @@ export default class Rect extends PureComponent {
   startResize = (e, cursor) => {
     if (e.button !== 0) return
     document.body.style.cursor = cursor
-    const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } } } = this.props
+    const { styles: { position: { centerX, centerY }, transform: { rotateAngle } } } = this.props
+    let { styles: { size: { width, height } } } = this.props
     const { clientX: startX, clientY: startY } = e
+    
+    //to ensure if a auto width div is their get javascript width & height
+    // console.log('before utils',e.target.parentNode,width,height)
+    width = (typeof width === 'undefined' || typeof width === null)  ? e.target.parentNode.offsetWidth : width 
+    height = (typeof height === 'undefined' || typeof height === null) ? e.target.parentNode.offsetHeight : height
+    // console.log('utils',width,height)
+
     const rect = { width, height, centerX, centerY, rotateAngle }
     const type = e.target.getAttribute('class').split(' ')[ 0 ]
     this.props.onResizeStart && this.props.onResizeStart()
@@ -140,7 +152,8 @@ export default class Rect extends PureComponent {
       },
       zoomable,
       rotatable,
-      parentRotateAngle
+      parentRotateAngle,
+      children
     } = this.props
     const style = {
       width: Math.abs(width),
@@ -187,6 +200,7 @@ export default class Rect extends PureComponent {
             )
           })
         }
+        {children}
       </StyledRect>
     )
   }

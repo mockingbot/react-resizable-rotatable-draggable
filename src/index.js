@@ -5,6 +5,10 @@ import { centerToTL, tLToCenter, getNewStyle, degToRadian } from './utils'
 
 export default class ResizableRect extends Component {
   static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     left: PropTypes.number.isRequired,
     top: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
@@ -61,7 +65,7 @@ export default class ResizableRect extends Component {
 
   handleResize = (length, alpha, rect, type, isShiftKey) => {
     if (!this.props.onResize) return
-    const { rotateAngle, aspectRatio, minWidth, minHeight, parentRotateAngle } = this.props
+    const { rotateAngle, aspectRatio, minWidth, minHeight, parentRotateAngle,children } = this.props
     const beta = alpha - degToRadian(rotateAngle + parentRotateAngle)
     const deltaW = length * Math.cos(beta)
     const deltaH = length * Math.sin(beta)
@@ -80,7 +84,7 @@ export default class ResizableRect extends Component {
 
   render () {
     const {
-      top, left, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
+      children,top, left, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
       onRotate, onResizeStart, onResizeEnd, onRotateStart, onRotateEnd, onDragStart, onDragEnd
     } = this.props
 
@@ -88,6 +92,7 @@ export default class ResizableRect extends Component {
 
     return (
       <Rect
+        children={children}
         styles={styles}
         zoomable={zoomable}
         rotatable={Boolean(rotatable && onRotate)}
