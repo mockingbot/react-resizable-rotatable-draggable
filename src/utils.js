@@ -198,24 +198,35 @@ export const getCursor = (rotateAngle, d) => {
   return cursorDirectionArray[ newIndex ]
 }
 
-export const centerToTL = ({ centerX, centerY, width, height, rotateAngle }) => ({
-  top: centerY - height / 2,
-  left: centerX - width / 2,
-  width,
-  height,
-  rotateAngle
-})
-
-export const tLToCenter = ({ top, left, width, height, rotateAngle }) => ({
-  position: {
-    centerX: left + width / 2,
-    centerY: top + height / 2
-  },
-  size: {
+export const centerToTL = ({ centerX, centerY, width, height, rotateAngle }) => {
+  let centerWidth = typeof width === 'undefined' ? 0 : width ;
+  let centerHeight = typeof height === 'undefined' ? 0 : height ;
+  // console.log('center to TL', width,height,centerWidth,centerHeight)
+  return {
+    top: centerY - centerWidth / 2,
+    left: centerX - centerHeight / 2,
     width,
-    height
-  },
-  transform: {
+    height,
     rotateAngle
   }
-})
+}
+
+export const tLToCenter = ({ top, left, width, height, rotateAngle }) => {
+  let centerWidth = typeof width === 'undefined' ? 0 : width ;
+  let centerHeight = typeof height === 'undefined' ? 0 : height ;
+
+  // console.log('TL to center',left + centerWidth / 2,top + centerHeight / 2, width,height)
+  return {
+    position: {
+      centerX: left + centerWidth / 2,
+      centerY: top + centerHeight / 2
+    },
+    size: {
+      width,
+      height
+    },
+    transform: {
+      rotateAngle
+    }
+  }
+}

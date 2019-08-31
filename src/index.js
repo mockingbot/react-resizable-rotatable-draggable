@@ -11,8 +11,8 @@ export default class ResizableRect extends Component {
     ]),
     left: PropTypes.number.isRequired,
     top: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number,
     rotatable: PropTypes.bool,
     rotateAngle: PropTypes.number,
     parentRotateAngle: PropTypes.number,
@@ -40,7 +40,9 @@ export default class ResizableRect extends Component {
     rotatable: true,
     zoomable: '',
     minWidth: 10,
-    minHeight: 10
+    minHeight: 10,
+    // width: 0,
+    // height: 0
   }
 
   handleRotate = (angle, startAngle) => {
