@@ -145,6 +145,7 @@ export default class Rect extends PureComponent {
 
   render () {
     const {
+      className,
       styles: {
         position: { centerX, centerY },
         size: { width, height },
@@ -169,7 +170,7 @@ export default class Rect extends PureComponent {
       <StyledRect
         ref={this.setElementRef}
         onMouseDown={this.startDrag}
-        className="rect single-resizer"
+        className={`rect single-resizer ${className}`}
         style={style}
       >
         {

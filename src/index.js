@@ -86,7 +86,7 @@ export default class ResizableRect extends Component {
 
   render () {
     const {
-      children,top, left, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
+      className,children,top, left, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
       onRotate, onResizeStart, onResizeEnd, onRotateStart, onRotateEnd, onDragStart, onDragEnd
     } = this.props
 
@@ -94,6 +94,7 @@ export default class ResizableRect extends Component {
 
     return (
       <Rect
+        className={className}
         children={children}
         styles={styles}
         zoomable={zoomable}
