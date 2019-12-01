@@ -67,8 +67,13 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        deltaW = deltaH * ratio
-        width = height * ratio
+        if (ratio > 1) {
+          height = width / ratio
+          deltaH = deltaW / ratio
+        } else {
+          width = height * ratio
+          deltaW = deltaH * ratio
+        }
       }
       centerX += deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
       centerY += deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
@@ -82,8 +87,13 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        deltaW = deltaH * ratio
-        width = height * ratio
+        if (ratio > 1) {
+          height = width / ratio
+          deltaH = deltaW / ratio
+        } else {
+          width = height * ratio
+          deltaW = deltaH * ratio
+        }
       }
       centerX += deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
       centerY += deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
@@ -115,8 +125,13 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        height = width / ratio
-        deltaH = deltaW / ratio
+        if (ratio > 1) {
+          height = width / ratio
+          deltaH = deltaW / ratio
+        } else {
+          width = height * ratio
+          deltaW = deltaH * ratio
+        }
       }
       centerX -= deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
       centerY -= deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
@@ -150,8 +165,13 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        width = height * ratio
-        deltaW = deltaH * ratio
+        if (ratio > 1) {
+          height = width / ratio
+          deltaH = deltaW / ratio
+        } else {
+          width = height * ratio
+          deltaW = deltaH * ratio
+        }
       }
       centerX -= deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
       centerY -= deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
