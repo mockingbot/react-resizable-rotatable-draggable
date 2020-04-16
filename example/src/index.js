@@ -9,16 +9,16 @@ class App extends PureComponent {
     this.state = {
       width: 100,
       height: 100,
-      top: 100,
-      left: 100,
+      x: 100,
+      y: 100,
       rotateAngle: 0
     }
   }
 
-  handleResize = ({ top, left, width, height }, isShiftKey, type) => {
+  handleResize = ({ x, y, width, height }, isShiftKey, type) => {
     this.setState({
-      top: Math.round(top),
-      left: Math.round(left),
+      x: Math.round(x),
+      y: Math.round(y),
       width: Math.round(width),
       height: Math.round(height)
     })
@@ -30,8 +30,8 @@ class App extends PureComponent {
 
   handleDrag = (deltaX, deltaY) => {
     this.setState({
-      left: this.state.left + deltaX,
-      top: this.state.top + deltaY
+      x: this.state.x + deltaX,
+      y: this.state.y + deltaY
     })
   }
 
@@ -40,10 +40,10 @@ class App extends PureComponent {
   handleRotateStart = () => console.log('RotateStart')
 
   render () {
-    const { top, left, width, height, rotateAngle } = this.state
+    const { x, y, width, height, rotateAngle } = this.state
     return <ResizableRect {...{
-      top,
-      left,
+      x,
+      y,
       width,
       height,
       rotateAngle,

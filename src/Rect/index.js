@@ -14,6 +14,9 @@ const zoomableMap = {
   'sw': 'bl'
 }
 
+/**
+ * 维护一组被操作的矩形组件
+ */
 export default class Rect extends PureComponent {
   static propTypes = {
     styles: PropTypes.object,

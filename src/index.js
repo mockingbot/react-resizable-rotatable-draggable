@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Rect from './Rect'
-import { centerToTL, tLToCenter, getNewStyle, degToRadian } from './utils'
+import { centerToTL, getNewStyle, degToRadian, formatCenter } from './utils'
 
 export default class ResizableRect extends Component {
   static propTypes = {
-    left: PropTypes.number.isRequired,
-    top: PropTypes.number.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     rotatable: PropTypes.bool,
@@ -39,6 +39,9 @@ export default class ResizableRect extends Component {
     minHeight: 10
   }
 
+  /**
+   * 执行旋转
+   */
   handleRotate = (angle, startAngle) => {
     if (!this.props.onRotate) return
     let rotateAngle = Math.round(startAngle + angle)
@@ -59,6 +62,9 @@ export default class ResizableRect extends Component {
     this.props.onRotate(rotateAngle)
   }
 
+  /**
+   * 调整大小
+   */
   handleResize = (length, alpha, rect, type, isShiftKey) => {
     if (!this.props.onResize) return
     const { rotateAngle, aspectRatio, minWidth, minHeight, parentRotateAngle } = this.props
@@ -74,19 +80,21 @@ export default class ResizableRect extends Component {
     this.props.onResize(centerToTL({ centerX, centerY, width, height, rotateAngle }), isShiftKey, type)
   }
 
+  // 当执行拖拽功能时，执行库的使用者传入的拖拽函数
   handleDrag = (deltaX, deltaY) => {
     this.props.onDrag && this.props.onDrag(deltaX, deltaY)
   }
 
   render () {
     const {
-      top, left, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
+      y, x, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
       onRotate, onResizeStart, onResizeEnd, onRotateStart, onRotateEnd, onDragStart, onDragEnd
     } = this.props
 
-    const styles = tLToCenter({ top, left, width, height, rotateAngle })
+    const styles = formatCenter({ y, x, width, height, rotateAngle })
 
     return (
+      // 引入Rect组件，当执行on状态时，执行对应方法
       <Rect
         styles={styles}
         zoomable={zoomable}

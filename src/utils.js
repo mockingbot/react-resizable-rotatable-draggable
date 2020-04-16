@@ -7,6 +7,9 @@ export const getAngle = ({ x: x1, y: y1 }, { x: x2, y: y2 }) => {
   return (angle + 360) % 360
 }
 
+/**
+ * 角度转弧度
+ */
 export const degToRadian = (deg) => deg * Math.PI / 180
 
 const cos = (deg) => Math.cos(degToRadian(deg))
@@ -210,6 +213,23 @@ export const tLToCenter = ({ top, left, width, height, rotateAngle }) => ({
   position: {
     centerX: left + width / 2,
     centerY: top + height / 2
+  },
+  size: {
+    width,
+    height
+  },
+  transform: {
+    rotateAngle
+  }
+})
+
+/**
+ * 将传入的点位格式化为被Rect识别的函数
+*/
+export const formatCenter = ({ y, x, width, height, rotateAngle }) => ({
+  position: {
+    centerX: x,
+    centerY: y
   },
   size: {
     width,
