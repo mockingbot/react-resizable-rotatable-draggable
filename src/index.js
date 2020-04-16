@@ -11,7 +11,6 @@ export default class ResizableRect extends Component {
     height: PropTypes.number.isRequired,
     rotatable: PropTypes.bool,
     rotateAngle: PropTypes.number,
-    parentRotateAngle: PropTypes.number,
     zoomable: PropTypes.string,
     minWidth: PropTypes.number,
     minHeight: PropTypes.number,
@@ -31,7 +30,6 @@ export default class ResizableRect extends Component {
   }
 
   static defaultProps = {
-    parentRotateAngle: 0,
     rotateAngle: 0,
     rotatable: true,
     zoomable: '',
@@ -66,9 +64,10 @@ export default class ResizableRect extends Component {
    * 调整大小
    */
   handleResize = (length, alpha, rect, type, isShiftKey) => {
+    // 当onResize没有指定内容，即看成不使用调整大小功能，则不执行Resize功能
     if (!this.props.onResize) return
-    const { rotateAngle, aspectRatio, minWidth, minHeight, parentRotateAngle } = this.props
-    const beta = alpha - degToRadian(rotateAngle + parentRotateAngle)
+    const { rotateAngle, aspectRatio, minWidth, minHeight } = this.props
+    const beta = alpha - degToRadian(rotateAngle)
     const deltaW = length * Math.cos(beta)
     const deltaH = length * Math.sin(beta)
     const ratio = isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio
@@ -80,14 +79,16 @@ export default class ResizableRect extends Component {
     this.props.onResize(centerToTL({ centerX, centerY, width, height, rotateAngle }), isShiftKey, type)
   }
 
-  // 当执行拖拽功能时，执行库的使用者传入的拖拽函数
+  /**
+   * 当执行拖拽功能时，执行库的使用者传入的拖拽函数
+   */
   handleDrag = (deltaX, deltaY) => {
     this.props.onDrag && this.props.onDrag(deltaX, deltaY)
   }
 
   render () {
     const {
-      y, x, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
+      y, x, width, height, rotateAngle, zoomable, rotatable,
       onRotate, onResizeStart, onResizeEnd, onRotateStart, onRotateEnd, onDragStart, onDragEnd
     } = this.props
 
@@ -99,7 +100,6 @@ export default class ResizableRect extends Component {
         styles={styles}
         zoomable={zoomable}
         rotatable={Boolean(rotatable && onRotate)}
-        parentRotateAngle={parentRotateAngle}
 
         onResizeStart={onResizeStart}
         onResize={this.handleResize}

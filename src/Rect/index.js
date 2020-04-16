@@ -30,8 +30,7 @@ export default class Rect extends PureComponent {
     onRotateEnd: PropTypes.func,
     onDragStart: PropTypes.func,
     onDrag: PropTypes.func,
-    onDragEnd: PropTypes.func,
-    parentRotateAngle: PropTypes.number
+    onDragEnd: PropTypes.func
   }
 
   setElementRef = (ref) => { this.$element = ref }
@@ -142,8 +141,7 @@ export default class Rect extends PureComponent {
         transform: { rotateAngle }
       },
       zoomable,
-      rotatable,
-      parentRotateAngle
+      rotatable
     } = this.props
     const style = {
       width: Math.abs(width),
@@ -176,7 +174,7 @@ export default class Rect extends PureComponent {
 
         {
           direction.map(d => {
-            const cursor = `${getCursor(rotateAngle + parentRotateAngle, d)}-resize`
+            const cursor = `${getCursor(rotateAngle, d)}-resize`
             return (
               <div key={d} style={{ cursor }} className={`${zoomableMap[ d ]} resizable-handler`} onMouseDown={(e) => this.startResize(e, cursor)} />
             )
