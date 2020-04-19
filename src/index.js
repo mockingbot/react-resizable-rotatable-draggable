@@ -63,20 +63,29 @@ export default class ResizableRect extends Component {
   /**
    * 调整大小
    */
-  handleResize = (length, alpha, rect, type, isShiftKey) => {
+  handleResize = (delta, rect, type, isShiftKey) => {
     // 当onResize没有指定内容，即看成不使用调整大小功能，则不执行Resize功能
     if (!this.props.onResize) return
-    const { rotateAngle, aspectRatio, minWidth, minHeight } = this.props
-    const beta = alpha - degToRadian(rotateAngle)
-    const deltaW = length * Math.cos(beta)
-    const deltaH = length * Math.sin(beta)
+    const { rotateAngle, aspectRatio, minWidth, minHeight, x, y, width, height } = this.props
+    // console.log('x',x);
+    // const beta = alpha - degToRadian(rotateAngle)
+    // const deltaW = length * Math.cos(beta)
+    // const deltaH = length * Math.sin(beta)
     const ratio = isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio
-    const {
+    // let {
+    //   position: { centerX, centerY },
+    //   size: { currWidth, currHeight }
+    //  }
+    // = getNewStyle(type, { ...rect, rotateAngle }, deltaW, deltaH, ratio, minWidth, minHeight)
+    // 传入当前监听值，改变rect的状态
+    // } = getNewStyle(type, delta, x, y, width, height, ratio, minWidth, minHeight)
+    let {
       position: { centerX, centerY },
-      size: { width, height }
-    } = getNewStyle(type, { ...rect, rotateAngle }, deltaW, deltaH, ratio, minWidth, minHeight)
-
-    this.props.onResize(centerToTL({ centerX, centerY, width, height, rotateAngle }), isShiftKey, type)
+      size: { currWidth, currHeight }
+    } = getNewStyle(type, delta, rect, width, height, ratio, minWidth, minHeight)
+    // console.log(rect);
+    // console.log(getNewStyle(type, delta, rect, width, height, ratio, minWidth, minHeight))
+    this.props.onResize({ centerX, centerY, currWidth, currHeight }, isShiftKey, type)
   }
 
   /**

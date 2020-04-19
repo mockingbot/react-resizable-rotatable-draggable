@@ -12,193 +12,148 @@ export const getAngle = ({ x: x1, y: y1 }, { x: x2, y: y2 }) => {
  */
 export const degToRadian = (deg) => deg * Math.PI / 180
 
-const cos = (deg) => Math.cos(degToRadian(deg))
-const sin = (deg) => Math.sin(degToRadian(deg))
-
-const setWidthAndDeltaW = (width, deltaW, minWidth) => {
-  const expectedWidth = width + deltaW
-  if (expectedWidth > minWidth) {
-    width = expectedWidth
-  } else {
-    deltaW = minWidth - width
-    width = minWidth
-  }
-  return { width, deltaW }
-}
-
-const setHeightAndDeltaH = (height, deltaH, minHeight) => {
-  const expectedHeight = height + deltaH
-  if (expectedHeight > minHeight) {
-    height = expectedHeight
-  } else {
-    deltaH = minHeight - height
-    height = minHeight
-  }
-  return { height, deltaH }
-}
-
-export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeight) => {
+export const getNewStyle = (type, delta, rect, a, b, ratio, minWidth, minHeight) => {
   let { width, height, centerX, centerY, rotateAngle } = rect
-  const widthFlag = width < 0 ? -1 : 1
-  const heightFlag = height < 0 ? -1 : 1
-  width = Math.abs(width)
-  height = Math.abs(height)
+  let { abs, cos, sin, tan , pow, atan } = Math
+
+  width = abs(width)
+  height = abs(height)
+  rotateAngle = degToRadian(rotateAngle)
+
   switch (type) {
-    case 'r': {
-      const widthAndDeltaW = setWidthAndDeltaW(width, deltaW, minWidth)
-      width = widthAndDeltaW.width
-      deltaW = widthAndDeltaW.deltaW
-      if (ratio) {
-        deltaH = deltaW / ratio
-        height = width / ratio
-        // 左上角固定
-        centerX += deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
-        centerY += deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
-      } else {
-        // 左边固定
-        centerX += deltaW / 2 * cos(rotateAngle)
-        centerY += deltaW / 2 * sin(rotateAngle)
-      }
-      break
-    }
-    case 'tr': {
-      deltaH = -deltaH
-      const widthAndDeltaW = setWidthAndDeltaW(width, deltaW, minWidth)
-      width = widthAndDeltaW.width
-      deltaW = widthAndDeltaW.deltaW
-      const heightAndDeltaH = setHeightAndDeltaH(height, deltaH, minHeight)
-      height = heightAndDeltaH.height
-      deltaH = heightAndDeltaH.deltaH
-      if (ratio) {
-        deltaW = deltaH * ratio
-        width = height * ratio
-      }
-      centerX += deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
-      centerY += deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
-      break
-    }
-    case 'br': {
-      const widthAndDeltaW = setWidthAndDeltaW(width, deltaW, minWidth)
-      width = widthAndDeltaW.width
-      deltaW = widthAndDeltaW.deltaW
-      const heightAndDeltaH = setHeightAndDeltaH(height, deltaH, minHeight)
-      height = heightAndDeltaH.height
-      deltaH = heightAndDeltaH.deltaH
-      if (ratio) {
-        deltaW = deltaH * ratio
-        width = height * ratio
-      }
-      centerX += deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
-      centerY += deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
+    case 't': {
+      const oldCenterX = centerX
+      const oldCenterY = centerY
+      height = (centerY - delta.deltaY) / cos(rotateAngle) + height / 2
+      centerY = delta.deltaY + height / 2 * cos(rotateAngle)
+      centerX = (oldCenterY - centerY) * tan(rotateAngle) + oldCenterX
       break
     }
     case 'b': {
-      const heightAndDeltaH = setHeightAndDeltaH(height, deltaH, minHeight)
-      height = heightAndDeltaH.height
-      deltaH = heightAndDeltaH.deltaH
-      if (ratio) {
-        deltaW = deltaH * ratio
-        width = height * ratio
-        // 左上角固定
-        centerX += deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
-        centerY += deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
-      } else {
-        // 上边固定
-        centerX -= deltaH / 2 * sin(rotateAngle)
-        centerY += deltaH / 2 * cos(rotateAngle)
-      }
-      break
-    }
-    case 'bl': {
-      deltaW = -deltaW
-      const widthAndDeltaW = setWidthAndDeltaW(width, deltaW, minWidth)
-      width = widthAndDeltaW.width
-      deltaW = widthAndDeltaW.deltaW
-      const heightAndDeltaH = setHeightAndDeltaH(height, deltaH, minHeight)
-      height = heightAndDeltaH.height
-      deltaH = heightAndDeltaH.deltaH
-      if (ratio) {
-        height = width / ratio
-        deltaH = deltaW / ratio
-      }
-      centerX -= deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
-      centerY -= deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
+      const oldCenterX = centerX
+      const oldCenterY = centerY
+      height = (delta.deltaY - centerY) / cos(rotateAngle) + height / 2
+      centerY = delta.deltaY - height / 2 * cos(rotateAngle)
+      centerX = (oldCenterY - centerY) * tan(rotateAngle) + oldCenterX
       break
     }
     case 'l': {
-      deltaW = -deltaW
-      const widthAndDeltaW = setWidthAndDeltaW(width, deltaW, minWidth)
-      width = widthAndDeltaW.width
-      deltaW = widthAndDeltaW.deltaW
-      if (ratio) {
-        height = width / ratio
-        deltaH = deltaW / ratio
-        // 右上角固定
-        centerX -= deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
-        centerY -= deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
-      } else {
-        // 右边固定
-        centerX -= deltaW / 2 * cos(rotateAngle)
-        centerY -= deltaW / 2 * sin(rotateAngle)
-      }
+      const oldCenterX = centerX
+      const oldCenterY = centerY
+      width = (centerX - delta.deltaX) / cos(rotateAngle) + width / 2
+      centerX = delta.deltaX + width / 2 * cos(rotateAngle)
+      centerY = (centerX - oldCenterX) * tan(rotateAngle) + oldCenterY
+      break
+    }
+    case 'r': {
+      const oldCenterX = centerX
+      const oldCenterY = centerY
+
+      width = (delta.deltaX - centerX) / cos(rotateAngle) + width / 2
+      centerX = delta.deltaX - width / 2 * cos(rotateAngle)
+      centerY = (centerX - oldCenterX) * tan(rotateAngle) + oldCenterY
+      break
+    }
+    case 'br': {
+      let rbX = centerX - (cos(rotateAngle) * width / 2) + (sin(rotateAngle) * height / 2)
+      let rbY = centerY - (sin(rotateAngle) * width / 2) - (cos(rotateAngle) * height / 2)
+
+      centerX = (delta.deltaX + rbX) / 2
+      centerY = (delta.deltaY + rbY) / 2
+
+      const diagonal = pow(pow(rbX - delta.deltaX, 2) + pow(rbY - delta.deltaY, 2), 0.5)
+
+      console.log('diagonal', diagonal)
+
+      const line_x = rbX - delta.deltaX
+      const line_y = rbY - delta.deltaY
+
+      //矩形内宽与对角线的夹角
+      let angleB = atan(line_y / line_x) - rotateAngle
+      width = diagonal * cos(angleB)
+      height = diagonal * sin(angleB)
+
+      break
+    }
+    case 'bl': {
+      let rbX = centerX + (cos(  - rotateAngle) * width / 2) - (sin( - rotateAngle) * height / 2)
+      let rbY = centerY - (sin(  - rotateAngle) * width / 2) - (cos( - rotateAngle) * height / 2)
+
+      centerX = (delta.deltaX + rbX) / 2
+      centerY = (delta.deltaY + rbY) / 2
+
+      const diagonal = pow(pow(rbX - delta.deltaX, 2) + pow(rbY - delta.deltaY, 2), 0.5)
+
+      const line_x = rbX - delta.deltaX
+      const line_y = rbY - delta.deltaY
+
+      //矩形内宽与对角线的夹角
+      let angleB = atan(line_y / line_x) - rotateAngle
+      width = diagonal * cos(angleB)
+      height = diagonal * sin(angleB)
+
+      break
+    }
+    case 'tr': {
+      let rbX = centerX - (cos( - rotateAngle) * width / 2) + (sin( - rotateAngle) * height / 2)
+      let rbY = centerY + (sin( - rotateAngle) * width / 2) + (cos( - rotateAngle) * height / 2)
+
+      centerX = (delta.deltaX + rbX) / 2
+      centerY = (delta.deltaY + rbY) / 2
+
+      const diagonal = pow(pow(rbX - delta.deltaX, 2) + pow(rbY - delta.deltaY, 2), 0.5)
+
+      const line_x = rbX - delta.deltaX
+      const line_y = rbY - delta.deltaY
+
+      //矩形内宽与对角线的夹角
+      let angleB = atan(line_y / line_x) - rotateAngle
+      width = diagonal * cos(angleB)
+      height = diagonal * sin(angleB)
+
       break
     }
     case 'tl': {
-      deltaW = -deltaW
-      deltaH = -deltaH
-      const widthAndDeltaW = setWidthAndDeltaW(width, deltaW, minWidth)
-      width = widthAndDeltaW.width
-      deltaW = widthAndDeltaW.deltaW
-      const heightAndDeltaH = setHeightAndDeltaH(height, deltaH, minHeight)
-      height = heightAndDeltaH.height
-      deltaH = heightAndDeltaH.deltaH
-      if (ratio) {
-        width = height * ratio
-        deltaW = deltaH * ratio
-      }
-      centerX -= deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
-      centerY -= deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
-      break
-    }
-    case 't': {
-      deltaH = -deltaH
-      const heightAndDeltaH = setHeightAndDeltaH(height, deltaH, minHeight)
-      height = heightAndDeltaH.height
-      deltaH = heightAndDeltaH.deltaH
-      if (ratio) {
-        width = height * ratio
-        deltaW = deltaH * ratio
-        // 左下角固定
-        centerX += deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
-        centerY += deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
-      } else {
-        centerX += deltaH / 2 * sin(rotateAngle)
-        centerY -= deltaH / 2 * cos(rotateAngle)
-      }
+      let rbX = (cos(rotateAngle) * width / 2) - (sin(rotateAngle) * height / 2) + centerX
+      let rbY = (sin(rotateAngle) * width / 2) + (cos(rotateAngle) * height / 2) + centerY
+
+      centerX = (delta.deltaX + rbX) / 2
+      centerY = (delta.deltaY + rbY) / 2
+
+      const diagonal = pow(pow(rbX - delta.deltaX, 2) + pow(rbY - delta.deltaY, 2), 0.5)
+
+      console.log('diagonal', diagonal)
+
+      const line_x = rbX - delta.deltaX
+      const line_y = rbY - delta.deltaY
+
+      //矩形内宽与对角线的夹角
+      let angleB = atan(line_y / line_x) - rotateAngle
+      width = diagonal * cos(angleB)
+      height = diagonal * sin(angleB)
+
       break
     }
   }
-
   return {
     position: {
       centerX,
       centerY
     },
     size: {
-      width: width * widthFlag,
-      height: height * heightFlag
+      currWidth: width,
+      currHeight: height
     }
   }
 }
-
 const cursorStartMap = { n: 0, ne: 1, e: 2, se: 3, s: 4, sw: 5, w: 6, nw: 7 }
-const cursorDirectionArray = [ 'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw' ]
+const cursorDirectionArray = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
 const cursorMap = { 0: 0, 1: 1, 2: 2, 3: 2, 4: 3, 5: 4, 6: 4, 7: 5, 8: 6, 9: 6, 10: 7, 11: 8 }
 export const getCursor = (rotateAngle, d) => {
-  const increment = cursorMap[ Math.floor(rotateAngle / 30) ]
-  const index = cursorStartMap[ d ]
+  const increment = cursorMap[Math.floor(rotateAngle / 30)]
+  const index = cursorStartMap[d]
   const newIndex = (index + increment) % 8
-  return cursorDirectionArray[ newIndex ]
+  return cursorDirectionArray[newIndex]
 }
 
 export const centerToTL = ({ centerX, centerY, width, height, rotateAngle }) => ({
@@ -209,23 +164,9 @@ export const centerToTL = ({ centerX, centerY, width, height, rotateAngle }) => 
   rotateAngle
 })
 
-export const tLToCenter = ({ top, left, width, height, rotateAngle }) => ({
-  position: {
-    centerX: left + width / 2,
-    centerY: top + height / 2
-  },
-  size: {
-    width,
-    height
-  },
-  transform: {
-    rotateAngle
-  }
-})
-
 /**
  * 将传入的点位格式化为被Rect识别的函数
-*/
+ */
 export const formatCenter = ({ y, x, width, height, rotateAngle }) => ({
   position: {
     centerX: x,
