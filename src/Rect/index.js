@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import { getLength, getAngle, getCursor } from '../utils'
+import {getAngle, getCursor } from '../utils'
 import StyledRect from './StyledRect'
 
 const zoomableMap = {
@@ -109,8 +109,6 @@ export default class Rect extends PureComponent {
     document.body.style.cursor = cursor
     // 初始状态
     const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } } } = this.props
-    // 当前鼠标坐标
-    const { clientX: startX, clientY: startY } = e
     // 将初始状态维护到rect到对象中去
     const rect = { width, height, centerX, centerY, rotateAngle }
     // 获取当前选中的点的类型
@@ -123,18 +121,10 @@ export default class Rect extends PureComponent {
     const onMove = (e) => {
       if (!this._isMouseDown) return // patch: fix windows press win key during mouseup issue
       e.stopImmediatePropagation()
+      //当前鼠标坐标
       const { clientX, clientY } = e
-      // 相对坐标的偏移，基于当前帧的鼠标坐标 - 于上一帧帧的鼠标坐标
-      // console.log('clientX',clientX)
-      // console.log('rect',rect)
-      const deltaX = clientX
-      const deltaY = clientY
       // 将偏移存入delta对象中
-      const delta = { deltaX, deltaY }
-      // Math.atan2() 返回从原点(0,0)到(x,y)点的线段与x轴正方向之间的平面角度(弧度值)，也就是Math.atan2(y,x)
-      // const alpha = Math.atan2(deltaY, deltaX)
-      // 获取到原点的线段长度
-      // const deltaL = getLength(deltaX, deltaY)
+      const delta = { deltaX: clientX, deltaY: clientY }
 
       const isShiftKey = e.shiftKey
       this.props.onResize(delta, rect, type, isShiftKey)

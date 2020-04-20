@@ -15,20 +15,17 @@ class App extends PureComponent {
     }
   }
 
-  handleResize = ({ centerX, centerY, currWidth, currHeight }, isShiftKey, type) => {
+  handleResize = ({ x, y, width, height }, isShiftKey, type) => {
     this.setState({
-      x: centerX,
-      y: centerY,
-      width: currWidth,
-      height: currHeight
+      x: x,
+      y: y,
+      width: Math.round(width),
+      height: Math.round(height)
     })
-
-    console.log('state',this.state);
   }
 
   handleRotate = (rotateAngle) => {
     this.setState({ rotateAngle })
-    console.log('state',this.state);
   }
 
   handleDrag = (deltaX, deltaY) => {
@@ -36,7 +33,6 @@ class App extends PureComponent {
       x: this.state.x + deltaX,
       y: this.state.y + deltaY
     })
-    console.log('state',this.state);
   }
 
   handleRotateEnd = () => console.log('RotateEnd')
@@ -51,7 +47,7 @@ class App extends PureComponent {
       width,
       height,
       rotateAngle,
-      // aspectRatio: false,
+      //aspectRatio: false,
       minWidth: -Infinity,
       minHeight: -Infinity,
       zoomable: 'n, w, s, e, nw, ne, se, sw',
