@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import {getAngle, getCursor } from '../utils'
+import { getAngle, getCursor } from '../utils'
 import StyledRect from './StyledRect'
 
 const zoomableMap = {
@@ -103,8 +103,6 @@ export default class Rect extends PureComponent {
 
   // Resize
   startResize = (e, cursor) => {
-
-
     if (e.button !== 0) return
     document.body.style.cursor = cursor
     // 初始状态
@@ -121,7 +119,7 @@ export default class Rect extends PureComponent {
     const onMove = (e) => {
       if (!this._isMouseDown) return // patch: fix windows press win key during mouseup issue
       e.stopImmediatePropagation()
-      //当前鼠标坐标
+      // 当前鼠标坐标
       const { clientX, clientY } = e
       // 将偏移存入delta对象中
       const delta = { deltaX: clientX, deltaY: clientY }
@@ -187,7 +185,7 @@ export default class Rect extends PureComponent {
             const cursor = `${getCursor(rotateAngle, d)}-resize`
             return (
               <div key={d} style={{ cursor }} className={`${zoomableMap[d]} resizable-handler`}
-                   onMouseDown={(e) => this.startResize(e, cursor)}/>
+                onMouseDown={(e) => this.startResize(e, cursor)} />
             )
           })
         }
@@ -195,7 +193,7 @@ export default class Rect extends PureComponent {
         {
           direction.map(d => {
             return (
-              <div key={d} className={`${zoomableMap[d]} square`}/>
+              <div key={d} className={`${zoomableMap[d]} square`} />
             )
           })
         }

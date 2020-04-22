@@ -12,8 +12,11 @@ export default class ResizableRect extends Component {
     rotatable: PropTypes.bool,
     rotateAngle: PropTypes.number,
     zoomable: PropTypes.string,
+    // eslint-disable-next-line react/no-unused-prop-types
     minWidth: PropTypes.number,
+    // eslint-disable-next-line react/no-unused-prop-types
     minHeight: PropTypes.number,
+    // eslint-disable-next-line react/no-unused-prop-types
     aspectRatio: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.bool

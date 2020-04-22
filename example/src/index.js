@@ -47,7 +47,7 @@ class App extends PureComponent {
       width,
       height,
       rotateAngle,
-      //aspectRatio: false,
+      // aspectRatio: false,
       minWidth: -Infinity,
       minHeight: -Infinity,
       zoomable: 'n, w, s, e, nw, ne, se, sw',

@@ -28,8 +28,8 @@ class App extends Component {
     this.state = {
       width: 100,
       height: 100,
-      top: 100,
-      left: 100,
+      x: 100,
+      y: 100,
       rotateAngle: 0
     }
   }
@@ -37,14 +37,14 @@ class App extends Component {
   handleResize = (style, isShiftKey, type) => {
     // type is a string and it shows which resize-handler you clicked
     // e.g. if you clicked top-right handler, then type is 'tr'
-    let { top, left, width, height } = style
-    top = Math.round(top)
-    left = Math.round(left)
+    let { x, y, width, height } = style
+    x:x
+    y:y
     width = Math.round(width)
     height = Math.round(height)
     this.setState({
-      top,
-      left,
+      x,
+      y,
       width,
       height
     })
@@ -58,18 +58,18 @@ class App extends Component {
 
   handleDrag = (deltaX, deltaY) => {
     this.setState({
-      left: this.state.left + deltaX,
-      top: this.state.top + deltaY
+      x: this.state.x + deltaX,
+      y: this.state.y + deltaY
     })
   }
 
   render() {
-    const {width, top, left, height, rotateAngle} = this.state
+    const { x, y, width, height, rotateAngle} = this.state
     return (
       <div className="App">
         <ResizableRect
-          left={left}
-          top={top}
+          x={x}
+          y={y}
           width={width}
           height={height}
           rotateAngle={rotateAngle}
@@ -100,8 +100,8 @@ export default App
 
 | Props       |  Type                   | Default | Example                               |
 |:-----------:|:-----------------------:|:-------:|:-------------------------------------:|
-|left         | number.isRequired       |         | 10                                    |
-|top          | number.isRequired       |         | 10                                    |
+|x            | number.isRequired       |         | 10                                    |
+|y            | number.isRequired       |         | 10                                    |
 |width        | number.isRequired       |         | 100                                   |
 |height       | number.isRequired       |         | 100                                   |
 |rotateAngle  | number                  | 0       | 0                                     |
