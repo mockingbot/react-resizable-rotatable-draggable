@@ -19,6 +19,8 @@ export default class Rect extends PureComponent {
     styles: PropTypes.object,
     zoomable: PropTypes.string,
     rotatable: PropTypes.bool,
+    dragStartThreshold: PropTypes.number,
+    dragStartTimeThreshold: PropTypes.number,
     onResizeStart: PropTypes.func,
     onResize: PropTypes.func,
     onResizeEnd: PropTypes.func,
@@ -35,24 +37,48 @@ export default class Rect extends PureComponent {
 
   // Drag
   startDrag = (e) => {
-    let { clientX: startX, clientY: startY } = e
-    this.props.onDragStart && this.props.onDragStart()
+    let { clientX: lastX, clientY: lastY } = e
     this._isMouseDown = true
+
+    let dragStarted = false
+    const { dragStartThreshold, dragStartTimeThreshold } = this.props
+    const startDragTimer = setTimeout(() => {
+      dragStarted = true
+      this.props.onDragStart && this.props.onDragStart()
+    }, dragStartTimeThreshold)
+
     const onMove = (e) => {
       if (!this._isMouseDown) return // patch: fix windows press win key during mouseup issue
       e.stopImmediatePropagation()
       const { clientX, clientY } = e
-      const deltaX = clientX - startX
-      const deltaY = clientY - startY
+      const deltaX = clientX - lastX
+      const deltaY = clientY - lastY
+      lastX = clientX
+      lastY = clientY
+
+      if (!dragStarted) {
+        if (
+          Math.abs(deltaX) < dragStartThreshold &&
+          Math.abs(deltaY) < dragStartThreshold
+        ) {
+          return
+        }
+        dragStarted = true
+        clearTimeout(startDragTimer)
+        this.props.onDragStart && this.props.onDragStart()
+      }
+
       this.props.onDrag(deltaX, deltaY)
-      startX = clientX
-      startY = clientY
     }
     const onUp = () => {
       document.removeEventListener('mousemove', onMove)
       document.removeEventListener('mouseup', onUp)
       if (!this._isMouseDown) return
       this._isMouseDown = false
+      if (!dragStarted) {
+        clearTimeout(startDragTimer)
+        return
+      }
       this.props.onDragEnd && this.props.onDragEnd()
     }
     document.addEventListener('mousemove', onMove)
