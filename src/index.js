@@ -19,6 +19,8 @@ export default class ResizableRect extends Component {
       PropTypes.number,
       PropTypes.bool
     ]),
+    dragStartThreshold: PropTypes.number,
+    dragStartTimeThreshold: PropTypes.number,
     onRotateStart: PropTypes.func,
     onRotate: PropTypes.func,
     onRotateEnd: PropTypes.func,
@@ -36,7 +38,9 @@ export default class ResizableRect extends Component {
     rotatable: true,
     zoomable: '',
     minWidth: 10,
-    minHeight: 10
+    minHeight: 10,
+    dragStartThreshold: 3,
+    dragStartTimeThreshold: 1000
   }
 
   handleRotate = (angle, startAngle) => {
@@ -80,7 +84,7 @@ export default class ResizableRect extends Component {
 
   render () {
     const {
-      top, left, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
+      top, left, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable, dragStartThreshold, dragStartTimeThreshold,
       onRotate, onResizeStart, onResizeEnd, onRotateStart, onRotateEnd, onDragStart, onDragEnd
     } = this.props
 
@@ -92,6 +96,8 @@ export default class ResizableRect extends Component {
         zoomable={zoomable}
         rotatable={Boolean(rotatable && onRotate)}
         parentRotateAngle={parentRotateAngle}
+        dragStartThreshold={dragStartThreshold}
+        dragStartTimeThreshold={dragStartTimeThreshold}
 
         onResizeStart={onResizeStart}
         onResize={this.handleResize}
