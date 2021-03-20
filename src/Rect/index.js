@@ -14,6 +14,8 @@ const zoomableMap = {
   'sw': 'bl'
 }
 
+const MAIN_MOUSE_BUTTON = 0
+
 export default class Rect extends PureComponent {
   static propTypes = {
     styles: PropTypes.object,
@@ -35,6 +37,7 @@ export default class Rect extends PureComponent {
 
   // Drag
   startDrag = (e) => {
+    if (e.button !== MAIN_MOUSE_BUTTON) return
     let { clientX: startX, clientY: startY } = e
     this.props.onDragStart && this.props.onDragStart()
     this._isMouseDown = true
@@ -61,7 +64,7 @@ export default class Rect extends PureComponent {
 
   // Rotate
   startRotate = (e) => {
-    if (e.button !== 0) return
+    if (e.button !== MAIN_MOUSE_BUTTON) return
     const { clientX, clientY } = e
     const { styles: { transform: { rotateAngle: startAngle } } } = this.props
     const rect = this.$element.getBoundingClientRect()
@@ -99,7 +102,7 @@ export default class Rect extends PureComponent {
 
   // Resize
   startResize = (e, cursor) => {
-    if (e.button !== 0) return
+    if (e.button !== MAIN_MOUSE_BUTTON) return
     document.body.style.cursor = cursor
     const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } } } = this.props
     const { clientX: startX, clientY: startY } = e
