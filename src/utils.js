@@ -46,16 +46,11 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       width = widthAndDeltaW.width
       deltaW = widthAndDeltaW.deltaW
       if (ratio) {
-        deltaH = deltaW / ratio
         height = width / ratio
-        // 左上角固定
-        centerX += deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
-        centerY += deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
-      } else {
-        // 左边固定
-        centerX += deltaW / 2 * cos(rotateAngle)
-        centerY += deltaW / 2 * sin(rotateAngle)
       }
+      // 左边固定
+      centerX += deltaW / 2 * cos(rotateAngle)
+      centerY += deltaW / 2 * sin(rotateAngle)
       break
     }
     case 'tr': {
@@ -67,8 +62,13 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        deltaW = deltaH * ratio
-        width = height * ratio
+        if (ratio > 1) {
+          height = width / ratio
+          deltaH = deltaW / ratio
+        } else {
+          width = height * ratio
+          deltaW = deltaH * ratio
+        }
       }
       centerX += deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
       centerY += deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
@@ -82,8 +82,13 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        deltaW = deltaH * ratio
-        width = height * ratio
+        if (ratio > 1) {
+          height = width / ratio
+          deltaH = deltaW / ratio
+        } else {
+          width = height * ratio
+          deltaW = deltaH * ratio
+        }
       }
       centerX += deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
       centerY += deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
@@ -94,16 +99,11 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        deltaW = deltaH * ratio
         width = height * ratio
-        // 左上角固定
-        centerX += deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
-        centerY += deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
-      } else {
-        // 上边固定
-        centerX -= deltaH / 2 * sin(rotateAngle)
-        centerY += deltaH / 2 * cos(rotateAngle)
       }
+      // 上边固定
+      centerX -= deltaH / 2 * sin(rotateAngle)
+      centerY += deltaH / 2 * cos(rotateAngle)
       break
     }
     case 'bl': {
@@ -115,8 +115,13 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        height = width / ratio
-        deltaH = deltaW / ratio
+        if (ratio > 1) {
+          height = width / ratio
+          deltaH = deltaW / ratio
+        } else {
+          width = height * ratio
+          deltaW = deltaH * ratio
+        }
       }
       centerX -= deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
       centerY -= deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
@@ -129,15 +134,10 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       deltaW = widthAndDeltaW.deltaW
       if (ratio) {
         height = width / ratio
-        deltaH = deltaW / ratio
-        // 右上角固定
-        centerX -= deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
-        centerY -= deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
-      } else {
-        // 右边固定
-        centerX -= deltaW / 2 * cos(rotateAngle)
-        centerY -= deltaW / 2 * sin(rotateAngle)
       }
+      // 右边固定
+      centerX -= deltaW / 2 * cos(rotateAngle)
+      centerY -= deltaW / 2 * sin(rotateAngle)
       break
     }
     case 'tl': {
@@ -150,8 +150,13 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       height = heightAndDeltaH.height
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
-        width = height * ratio
-        deltaW = deltaH * ratio
+        if (ratio > 1) {
+          height = width / ratio
+          deltaH = deltaW / ratio
+        } else {
+          width = height * ratio
+          deltaW = deltaH * ratio
+        }
       }
       centerX -= deltaW / 2 * cos(rotateAngle) - deltaH / 2 * sin(rotateAngle)
       centerY -= deltaW / 2 * sin(rotateAngle) + deltaH / 2 * cos(rotateAngle)
@@ -164,14 +169,9 @@ export const getNewStyle = (type, rect, deltaW, deltaH, ratio, minWidth, minHeig
       deltaH = heightAndDeltaH.deltaH
       if (ratio) {
         width = height * ratio
-        deltaW = deltaH * ratio
-        // 左下角固定
-        centerX += deltaW / 2 * cos(rotateAngle) + deltaH / 2 * sin(rotateAngle)
-        centerY += deltaW / 2 * sin(rotateAngle) - deltaH / 2 * cos(rotateAngle)
-      } else {
-        centerX += deltaH / 2 * sin(rotateAngle)
-        centerY -= deltaH / 2 * cos(rotateAngle)
       }
+      centerX += deltaH / 2 * sin(rotateAngle)
+      centerY -= deltaH / 2 * cos(rotateAngle)
       break
     }
   }
@@ -198,35 +198,24 @@ export const getCursor = (rotateAngle, d) => {
   return cursorDirectionArray[ newIndex ]
 }
 
-export const centerToTL = ({ centerX, centerY, width, height, rotateAngle }) => {
-  let centerWidth = typeof width === 'undefined' ? 0 : width ;
-  let centerHeight = typeof height === 'undefined' ? 0 : height ;
-  // console.log('center to TL', width,height,centerWidth,centerHeight)
-  return {
-    top: centerY - centerWidth / 2,
-    left: centerX - centerHeight / 2,
+export const centerToTL = ({ centerX, centerY, width, height, rotateAngle }) => ({
+  top: centerY - height / 2,
+  left: centerX - width / 2,
+  width,
+  height,
+  rotateAngle
+})
+
+export const tLToCenter = ({ top, left, width, height, rotateAngle }) => ({
+  position: {
+    centerX: left + width / 2,
+    centerY: top + height / 2
+  },
+  size: {
     width,
-    height,
+    height
+  },
+  transform: {
     rotateAngle
   }
-}
-
-export const tLToCenter = ({ top, left, width, height, rotateAngle }) => {
-  let centerWidth = typeof width === 'undefined' ? 0 : width ;
-  let centerHeight = typeof height === 'undefined' ? 0 : height ;
-
-  // console.log('TL to center',left + centerWidth / 2,top + centerHeight / 2, width,height)
-  return {
-    position: {
-      centerX: left + centerWidth / 2,
-      centerY: top + centerHeight / 2
-    },
-    size: {
-      width,
-      height
-    },
-    transform: {
-      rotateAngle
-    }
-  }
-}
+})
