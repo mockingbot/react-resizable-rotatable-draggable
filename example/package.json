@@ -5,9 +5,9 @@
     "build-dev": "webpack -c webpack.config.js --mode development --watch"
   },
   "dependencies": {
-    "babel-loader": "^8.0.5",
+    "babel-loader": "^8.3.0",
     "react-resizable-rotatable-draggable": "file:../",
-    "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
