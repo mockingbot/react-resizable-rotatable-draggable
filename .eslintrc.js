@@ -1,8 +1,8 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: [ 'standard', 'standard-react' ],
-  plugins: [ 'react' ],
+  extends: ['airbnb', 'prettier', 'prettier/react'],
+  plugins: ['react'],
   rules: {
-    'jsx-quotes': [ 'error', 'prefer-double' ]
+    'jsx-quotes': ['error', 'prefer-double']
   }
 }
