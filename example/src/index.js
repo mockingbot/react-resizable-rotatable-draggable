@@ -35,10 +35,6 @@ class App extends PureComponent {
     })
   }
 
-  handleRotateEnd = () => console.log('RotateEnd')
-
-  handleRotateStart = () => console.log('RotateStart')
-
   render() {
     const { top, left, width, height, rotateAngle } = this.state
     return (
@@ -49,20 +45,14 @@ class App extends PureComponent {
           width,
           height,
           rotateAngle,
-          // aspectRatio: false,
-          minWidth: -Infinity,
-          minHeight: -Infinity,
+          // aspectRatio: 1,
+          // minWidth: -Infinity,
+          // minHeight: -Infinity,
           zoomable: 'n, w, s, e, nw, ne, se, sw',
           // rotatable: true,
-          onRotateStart: this.handleRotateStart,
           onRotate: this.handleRotate,
-          onRotateEnd: this.handleRotateEnd,
-          // onResizeStart: this.handleResizeStart,
           onResize: this.handleResize,
-          // onResizeEnd: this.handleUp,
-          // onDragStart: this.handleDragStart,
           onDrag: this.handleDrag
-          // onDragEnd: this.handleDragEnd,
         }}
       >
         <img
