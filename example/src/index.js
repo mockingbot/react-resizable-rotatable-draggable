@@ -28,10 +28,10 @@ class App extends PureComponent {
     this.setState({ rotateAngle })
   }
 
-  handleDrag = (deltaX, deltaY) => {
+  handleDrag = (left, top) => {
     this.setState({
-      left: this.state.left + deltaX,
-      top: this.state.top + deltaY
+      left: left,
+      top: top
     })
   }
 
