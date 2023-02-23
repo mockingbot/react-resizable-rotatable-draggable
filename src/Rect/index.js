@@ -166,8 +166,8 @@ export default class Rect extends PureComponent {
     } = this.props
 
     const style = {
-      width: Math.abs(width),
-      height: Math.abs(height),
+      width: isFocused ? Math.abs(width) : Math.abs(width) - 1,
+      height: isFocused ? Math.abs(height) : Math.abs(height) - 1,
       transform: `rotate(${rotateAngle}deg)`,
       left: centerX - Math.abs(width) / 2,
       top: centerY - Math.abs(height) / 2
