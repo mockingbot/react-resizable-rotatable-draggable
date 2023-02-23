@@ -31,7 +31,8 @@ export default class Rect extends PureComponent {
     onDragEnd: PropTypes.func,
     parentRotateAngle: PropTypes.number,
     children: PropTypes.node,
-    color: PropTypes.color
+    color: PropTypes.color,
+    itemId: PropTypes.string
   }
 
   constructor(props) {
@@ -164,7 +165,8 @@ export default class Rect extends PureComponent {
       rotatable,
       parentRotateAngle,
       children,
-      color
+      color,
+      itemId
     } = this.props
 
     const style = {
@@ -186,7 +188,7 @@ export default class Rect extends PureComponent {
       <>
         {isFocused ? (
           <div
-            id="movable-box"
+            id={itemId}
             ref={this.setElementRef}
             onMouseDown={this.startDrag}
             className="rect single-resizer"
@@ -236,7 +238,7 @@ export default class Rect extends PureComponent {
           </div>
         ) : (
           <div
-            id="movable-box"
+            id={itemId}
             style={style}
             className="childContainer"
             onFocus={() => this.setState({ isFocused: true })}

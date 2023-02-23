@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import Rect from './Rect'
 import { centerToTL, tLToCenter, getNewStyle, degToRadian } from './utils'
 
+import { v4 as uuidv4 } from 'uuid'
+
 export default class ResizableRect extends Component {
   static propTypes = {
     left: PropTypes.number.isRequired,
@@ -26,7 +28,8 @@ export default class ResizableRect extends Component {
     onDrag: PropTypes.func,
     onDragEnd: PropTypes.func,
     children: PropTypes.node,
-    color: PropTypes.string
+    color: PropTypes.string,
+    haveBoundary: PropTypes.bool
   }
 
   static defaultProps = {
@@ -36,7 +39,13 @@ export default class ResizableRect extends Component {
     zoomable: '',
     minWidth: 10,
     minHeight: 10,
-    color: 'black'
+    color: 'black',
+    haveBoundary: true
+  }
+
+  constructor(props) {
+    super(props)
+    this.itemId = uuidv4()
   }
 
   handleRotate = (angle, startAngle) => {
@@ -81,11 +90,31 @@ export default class ResizableRect extends Component {
       minHeight
     )
 
-    this.props.onResize(
-      centerToTL({ centerX, centerY, width, height, rotateAngle }),
-      isShiftKey,
-      type
-    )
+    const values = centerToTL({ centerX, centerY, width, height, rotateAngle })
+
+    if (this.isOutOfBoundary(values.left, values.top, width, height)) {
+      return
+    }
+
+    this.props.onResize(values, isShiftKey, type)
+  }
+
+  isOutOfBoundary = (left, top, width, height) => {
+    const { haveBoundary } = this.props
+
+    const parentElement = document.getElementById(this.itemId).parentElement
+
+    if (
+      haveBoundary &&
+      (left <= 0 ||
+        left + width >= parentElement.offsetWidth ||
+        top <= 0 ||
+        top + height >= parentElement.offsetHeight)
+    ) {
+      return true
+    }
+
+    return false
   }
 
   handleDrag = (deltaX, deltaY) => {
@@ -93,14 +122,7 @@ export default class ResizableRect extends Component {
     const newLeft = left + deltaX
     const newTop = top + deltaY
 
-    const parentElement = document.getElementById('movable-box').parentElement
-
-    if (
-      newLeft <= 0 ||
-      newLeft + width >= parentElement.offsetWidth ||
-      newTop <= 0 ||
-      newTop + height >= parentElement.offsetHeight
-    ) {
+    if (this.isOutOfBoundary(newLeft, newTop, width, height)) {
       return
     }
 
@@ -147,6 +169,7 @@ export default class ResizableRect extends Component {
         onDragEnd={onDragEnd}
         children={children}
         color={color}
+        itemId={this.itemId}
       />
     )
   }

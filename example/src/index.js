@@ -53,6 +53,8 @@ class App extends PureComponent {
           onRotate: this.handleRotate,
           onResize: this.handleResize,
           onDrag: this.handleDrag
+          // haveBoundary: false,
+          // color: 'red'
         }}
       >
         <img
