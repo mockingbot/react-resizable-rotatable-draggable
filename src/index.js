@@ -24,7 +24,8 @@ export default class ResizableRect extends Component {
     onResizeEnd: PropTypes.func,
     onDragStart: PropTypes.func,
     onDrag: PropTypes.func,
-    onDragEnd: PropTypes.func
+    onDragEnd: PropTypes.func,
+    children: PropTypes.node
   }
 
   static defaultProps = {
@@ -105,7 +106,8 @@ export default class ResizableRect extends Component {
       onRotateStart,
       onRotateEnd,
       onDragStart,
-      onDragEnd
+      onDragEnd,
+      children
     } = this.props
 
     const styles = tLToCenter({ top, left, width, height, rotateAngle })
@@ -125,6 +127,7 @@ export default class ResizableRect extends Component {
         onDragStart={onDragStart}
         onDrag={this.handleDrag}
         onDragEnd={onDragEnd}
+        children={children}
       />
     )
   }

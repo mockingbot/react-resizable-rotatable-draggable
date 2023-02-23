@@ -29,7 +29,8 @@ export default class Rect extends PureComponent {
     onDragStart: PropTypes.func,
     onDrag: PropTypes.func,
     onDragEnd: PropTypes.func,
-    parentRotateAngle: PropTypes.number
+    parentRotateAngle: PropTypes.number,
+    children: PropTypes.node
   }
 
   setElementRef = (ref) => {
@@ -153,7 +154,8 @@ export default class Rect extends PureComponent {
       },
       zoomable,
       rotatable,
-      parentRotateAngle
+      parentRotateAngle,
+      children
     } = this.props
     const style = {
       width: Math.abs(width),
@@ -204,6 +206,8 @@ export default class Rect extends PureComponent {
         {direction.map((d) => {
           return <div key={d} className={`${zoomableMap[d]} square`} />
         })}
+
+        <div className="childContainer">{children}</div>
       </div>
     )
   }

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import ResizableRect from 'react-resizable-rotatable-draggable'
 
 class App extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -39,35 +39,42 @@ class App extends PureComponent {
 
   handleRotateStart = () => console.log('RotateStart')
 
-  render () {
+  render() {
     const { top, left, width, height, rotateAngle } = this.state
-    return <ResizableRect {...{
-      top,
-      left,
-      width,
-      height,
-      rotateAngle,
-      // aspectRatio: false,
-      minWidth: -Infinity,
-      minHeight: -Infinity,
-      zoomable: 'n, w, s, e, nw, ne, se, sw',
-      // rotatable: true,
-      onRotateStart: this.handleRotateStart,
-      onRotate: this.handleRotate,
-      onRotateEnd: this.handleRotateEnd,
-      // onResizeStart: this.handleResizeStart,
-      onResize: this.handleResize,
-      // onResizeEnd: this.handleUp,
-      // onDragStart: this.handleDragStart,
-      onDrag: this.handleDrag
-      // onDragEnd: this.handleDragEnd,
-    }} />
+    return (
+      <ResizableRect
+        {...{
+          top,
+          left,
+          width,
+          height,
+          rotateAngle,
+          // aspectRatio: false,
+          minWidth: -Infinity,
+          minHeight: -Infinity,
+          zoomable: 'n, w, s, e, nw, ne, se, sw',
+          // rotatable: true,
+          onRotateStart: this.handleRotateStart,
+          onRotate: this.handleRotate,
+          onRotateEnd: this.handleRotateEnd,
+          // onResizeStart: this.handleResizeStart,
+          onResize: this.handleResize,
+          // onResizeEnd: this.handleUp,
+          // onDragStart: this.handleDragStart,
+          onDrag: this.handleDrag
+          // onDragEnd: this.handleDragEnd,
+        }}
+      >
+        <img
+          src="https://via.placeholder.com/200x300.png"
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        />
+      </ResizableRect>
+    )
   }
 }
 
-const initExample = (rootElement = document.getElementById('root')) => ReactDOM.render(
-  <App />,
-  rootElement
-)
+const initExample = (rootElement = document.getElementById('root')) =>
+  ReactDOM.render(<App />, rootElement)
 
 export { initExample }
