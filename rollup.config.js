@@ -17,5 +17,5 @@ export default {
     resolve(),
     commonjs(),
   ],
-  external: ["react", "prop-types", "styled-components"],
+  external: ["react", "prop-types"],
 };
