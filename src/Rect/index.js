@@ -186,6 +186,7 @@ export default class Rect extends PureComponent {
       <>
         {isFocused ? (
           <div
+            id="movable-box"
             ref={this.setElementRef}
             onMouseDown={this.startDrag}
             className="rect single-resizer"
@@ -235,6 +236,7 @@ export default class Rect extends PureComponent {
           </div>
         ) : (
           <div
+            id="movable-box"
             style={style}
             className="childContainer"
             onFocus={() => this.setState({ isFocused: true })}

@@ -89,11 +89,18 @@ export default class ResizableRect extends Component {
   }
 
   handleDrag = (deltaX, deltaY) => {
-    const { left, top } = this.props
+    const { left, top, width, height } = this.props
     const newLeft = left + deltaX
     const newTop = top + deltaY
 
-    if (newLeft <= 0 || newTop <= 0) {
+    const parentElement = document.getElementById('movable-box').parentElement
+
+    if (
+      newLeft <= 0 ||
+      newLeft + width >= parentElement.offsetWidth ||
+      newTop <= 0 ||
+      newTop + height >= parentElement.offsetHeight
+    ) {
       return
     }
 
