@@ -10,6 +10,7 @@
     background: white;
     border: 1px solid #eb5648;
     border-radius: 1px;
+    z-index: 2;
 }
 
 .resizable-handler {
