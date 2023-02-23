@@ -36,7 +36,7 @@ export default class Rect extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      isFocused: false
+      isFocused: true
     }
   }
 
@@ -188,6 +188,9 @@ export default class Rect extends PureComponent {
             onMouseDown={this.startDrag}
             className="rect single-resizer"
             style={style}
+            tabIndex="0"
+            onFocus={() => this.setState({ isFocused: true })}
+            onBlur={() => this.setState({ isFocused: false })}
           >
             {rotatable && (
               <div className="rotate" onMouseDown={this.startRotate}>
@@ -223,7 +226,13 @@ export default class Rect extends PureComponent {
             <div className="childContainer">{children}</div>
           </div>
         ) : (
-          <div style={style} className="childContainer">
+          <div
+            style={style}
+            className="childContainer"
+            onFocus={() => this.setState({ isFocused: true })}
+            onBlur={() => this.setState({ isFocused: false })}
+            tabIndex="0"
+          >
             {children}
           </div>
         )}
