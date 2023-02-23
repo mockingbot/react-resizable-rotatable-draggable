@@ -90,7 +90,14 @@ export default class ResizableRect extends Component {
 
   handleDrag = (deltaX, deltaY) => {
     const { left, top } = this.props
-    this.props.onDrag && this.props.onDrag(left + deltaX, top + deltaY)
+    const newLeft = left + deltaX
+    const newTop = top + deltaY
+
+    if (newLeft <= 0 || newTop <= 0) {
+      return
+    }
+
+    this.props.onDrag && this.props.onDrag(newLeft, newTop)
   }
 
   render() {
