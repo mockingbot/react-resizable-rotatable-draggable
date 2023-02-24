@@ -38,7 +38,7 @@ export default class Rect extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      isFocused: true
+      isFocused: false
     }
   }
 
