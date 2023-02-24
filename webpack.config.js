@@ -57,8 +57,6 @@ module.exports = {
   ],
   optimization: { minimize: isProduction },
   resolve: {
-    fallback: {
-      crypto: require.resolve('crypto-browserify')
-    }
+    fallback: {}
   }
 }

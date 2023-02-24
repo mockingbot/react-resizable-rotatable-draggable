@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uuidv4 } from 'uuid'
 
 import {
   centerToTL,
@@ -40,7 +40,8 @@ export default function ResizableRect({
   const [width, setWidth] = useState(defaultWidth)
   const [height, setHeight] = useState(defaultHeight)
   const [rotateAngle, setRotateAngle] = useState(defaultRotateAngle)
-  const [itemId, setItemId] = useState(uuidv4())
+  // const [itemId, setItemId] = useState(uuidv4())
+  const [itemId, setItemId] = useState('iusdhfoishd')
 
   const styles = tLToCenter({ top, left, width, height, rotateAngle })
 

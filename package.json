@@ -59,8 +59,5 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "crypto-browserify": "^3.12.0",
-    "uuid": "^9.0.0"
-  }
+  "dependencies": {}
 }
