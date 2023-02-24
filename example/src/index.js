@@ -47,7 +47,9 @@ class App extends PureComponent {
           // rotatable: true,
           onRotate: this.handleRotate,
           onResize: this.handleResize,
-          onDrag: this.handleDrag
+          onDrag: this.handleDrag,
+          focusChange: true,
+          defaultFocus: true
           // haveBoundary: false,
           // color: 'red'
         }}

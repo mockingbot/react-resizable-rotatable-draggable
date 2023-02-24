@@ -494,6 +494,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
   _inherits(Rect, _PureComponent);
   var _super = _createSuper(Rect);
   function Rect(props) {
+    var _props$defaultFocus;
     var _this;
     _classCallCheck(this, Rect);
     _this = _super.call(this, props);
@@ -614,7 +615,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
       document.addEventListener('mouseup', onUp);
     });
     _this.state = {
-      isFocused: false
+      isFocused: (_props$defaultFocus = props.defaultFocus) !== null && _props$defaultFocus !== void 0 ? _props$defaultFocus : false
     };
     return _this;
   }
@@ -636,7 +637,8 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         parentRotateAngle = _this$props.parentRotateAngle,
         children = _this$props.children,
         color = _this$props.color,
-        itemId = _this$props.itemId;
+        itemId = _this$props.itemId,
+        focusChange = _this$props.focusChange;
       var style = {
         width: isFocused ? Math.abs(width) : Math.abs(width) - 1,
         height: isFocused ? Math.abs(height) : Math.abs(height) - 1,
@@ -661,12 +663,12 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         }),
         tabIndex: "0",
         onFocus: function onFocus() {
-          return _this2.setState({
+          return focusChange && _this2.setState({
             isFocused: true
           });
         },
         onBlur: function onBlur() {
-          return _this2.setState({
+          return focusChange && _this2.setState({
             isFocused: false
           });
         }
@@ -708,12 +710,12 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         style: style,
         className: "childContainer",
         onFocus: function onFocus() {
-          return _this2.setState({
+          return focusChange && _this2.setState({
             isFocused: true
           });
         },
         onBlur: function onBlur() {
-          return _this2.setState({
+          return focusChange && _this2.setState({
             isFocused: false
           });
         },
@@ -739,7 +741,9 @@ _defineProperty(Rect, "propTypes", {
   parentRotateAngle: PropTypes.number,
   children: PropTypes.node,
   color: PropTypes.color,
-  itemId: PropTypes.string
+  itemId: PropTypes.string,
+  focusChange: PropTypes.bool,
+  defaultFocus: PropTypes.bool
 });
 
 function ResizableRect(_ref) {
@@ -777,7 +781,11 @@ function ResizableRect(_ref) {
     _ref$defaultHeight = _ref.defaultHeight,
     defaultHeight = _ref$defaultHeight === void 0 ? 100 : _ref$defaultHeight,
     _ref$defaultRotateAng = _ref.defaultRotateAngle,
-    defaultRotateAngle = _ref$defaultRotateAng === void 0 ? 0 : _ref$defaultRotateAng;
+    defaultRotateAngle = _ref$defaultRotateAng === void 0 ? 0 : _ref$defaultRotateAng,
+    _ref$defaultFocus = _ref.defaultFocus,
+    defaultFocus = _ref$defaultFocus === void 0 ? false : _ref$defaultFocus,
+    _ref$focusChange = _ref.focusChange,
+    focusChange = _ref$focusChange === void 0 ? true : _ref$focusChange;
   var _useState = useState(defaultTop),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
@@ -885,7 +893,9 @@ function ResizableRect(_ref) {
     onDragEnd: onDragEnd,
     children: children,
     color: color,
-    itemId: itemId
+    itemId: itemId,
+    defaultFocus: defaultFocus,
+    focusChange: focusChange
   });
 }
 

@@ -32,13 +32,15 @@ export default class Rect extends PureComponent {
     parentRotateAngle: PropTypes.number,
     children: PropTypes.node,
     color: PropTypes.color,
-    itemId: PropTypes.string
+    itemId: PropTypes.string,
+    focusChange: PropTypes.bool,
+    defaultFocus: PropTypes.bool
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      isFocused: false
+      isFocused: props.defaultFocus ?? false
     }
   }
 
@@ -166,7 +168,8 @@ export default class Rect extends PureComponent {
       parentRotateAngle,
       children,
       color,
-      itemId
+      itemId,
+      focusChange
     } = this.props
 
     const style = {
@@ -194,8 +197,8 @@ export default class Rect extends PureComponent {
             className="rect single-resizer"
             style={{ ...style, borderColor: color }}
             tabIndex="0"
-            onFocus={() => this.setState({ isFocused: true })}
-            onBlur={() => this.setState({ isFocused: false })}
+            onFocus={() => focusChange && this.setState({ isFocused: true })}
+            onBlur={() => focusChange && this.setState({ isFocused: false })}
           >
             {rotatable && (
               <div className="rotate" onMouseDown={this.startRotate}>
@@ -241,8 +244,8 @@ export default class Rect extends PureComponent {
             id={itemId}
             style={style}
             className="childContainer"
-            onFocus={() => this.setState({ isFocused: true })}
-            onBlur={() => this.setState({ isFocused: false })}
+            onFocus={() => focusChange && this.setState({ isFocused: true })}
+            onBlur={() => focusChange && this.setState({ isFocused: false })}
             tabIndex="0"
           >
             {children}
