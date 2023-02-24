@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import ResizableRect from 'react-resizable-rotatable-draggable'
 
 class App extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -28,46 +28,45 @@ class App extends PureComponent {
     this.setState({ rotateAngle })
   }
 
-  handleDrag = (deltaX, deltaY) => {
+  handleDrag = (left, top) => {
     this.setState({
-      left: this.state.left + deltaX,
-      top: this.state.top + deltaY
+      left: left,
+      top: top
     })
   }
 
-  handleRotateEnd = () => console.log('RotateEnd')
-
-  handleRotateStart = () => console.log('RotateStart')
-
-  render () {
+  render() {
     const { top, left, width, height, rotateAngle } = this.state
-    return <ResizableRect {...{
-      top,
-      left,
-      width,
-      height,
-      rotateAngle,
-      // aspectRatio: false,
-      minWidth: -Infinity,
-      minHeight: -Infinity,
-      zoomable: 'n, w, s, e, nw, ne, se, sw',
-      // rotatable: true,
-      onRotateStart: this.handleRotateStart,
-      onRotate: this.handleRotate,
-      onRotateEnd: this.handleRotateEnd,
-      // onResizeStart: this.handleResizeStart,
-      onResize: this.handleResize,
-      // onResizeEnd: this.handleUp,
-      // onDragStart: this.handleDragStart,
-      onDrag: this.handleDrag
-      // onDragEnd: this.handleDragEnd,
-    }} />
+    return (
+      <ResizableRect
+        {...{
+          top,
+          left,
+          width,
+          height,
+          rotateAngle,
+          // aspectRatio: 1,
+          // minWidth: -Infinity,
+          // minHeight: -Infinity,
+          zoomable: 'n, w, s, e, nw, ne, se, sw',
+          // rotatable: true,
+          onRotate: this.handleRotate,
+          onResize: this.handleResize,
+          onDrag: this.handleDrag
+          // haveBoundary: false,
+          // color: 'red'
+        }}
+      >
+        <img
+          src="https://via.placeholder.com/200x300.png"
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        />
+      </ResizableRect>
+    )
   }
 }
 
-const initExample = (rootElement = document.getElementById('root')) => ReactDOM.render(
-  <App />,
-  rootElement
-)
+const initExample = (rootElement = document.getElementById('root')) =>
+  ReactDOM.render(<App />, rootElement)
 
 export { initExample }

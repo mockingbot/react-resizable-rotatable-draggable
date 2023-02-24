@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { getLength, getAngle, getCursor } from '../utils'
-import StyledRect from './StyledRect'
+
+import './index.css'
 
 const zoomableMap = {
-  'n': 't',
-  's': 'b',
-  'e': 'r',
-  'w': 'l',
-  'ne': 'tr',
-  'nw': 'tl',
-  'se': 'br',
-  'sw': 'bl'
+  n: 't',
+  s: 'b',
+  e: 'r',
+  w: 'l',
+  ne: 'tr',
+  nw: 'tl',
+  se: 'br',
+  sw: 'bl'
 }
 
 export default class Rect extends PureComponent {
@@ -28,10 +29,22 @@ export default class Rect extends PureComponent {
     onDragStart: PropTypes.func,
     onDrag: PropTypes.func,
     onDragEnd: PropTypes.func,
-    parentRotateAngle: PropTypes.number
+    parentRotateAngle: PropTypes.number,
+    children: PropTypes.node,
+    color: PropTypes.color,
+    itemId: PropTypes.string
   }
 
-  setElementRef = (ref) => { this.$element = ref }
+  constructor(props) {
+    super(props)
+    this.state = {
+      isFocused: true
+    }
+  }
+
+  setElementRef = (ref) => {
+    this.$element = ref
+  }
 
   // Drag
   startDrag = (e) => {
@@ -63,7 +76,11 @@ export default class Rect extends PureComponent {
   startRotate = (e) => {
     if (e.button !== 0) return
     const { clientX, clientY } = e
-    const { styles: { transform: { rotateAngle: startAngle } } } = this.props
+    const {
+      styles: {
+        transform: { rotateAngle: startAngle }
+      }
+    } = this.props
     const rect = this.$element.getBoundingClientRect()
     const center = {
       x: rect.left + rect.width / 2,
@@ -101,10 +118,16 @@ export default class Rect extends PureComponent {
   startResize = (e, cursor) => {
     if (e.button !== 0) return
     document.body.style.cursor = cursor
-    const { styles: { position: { centerX, centerY }, size: { width, height }, transform: { rotateAngle } } } = this.props
+    const {
+      styles: {
+        position: { centerX, centerY },
+        size: { width, height },
+        transform: { rotateAngle }
+      }
+    } = this.props
     const { clientX: startX, clientY: startY } = e
     const rect = { width, height, centerX, centerY, rotateAngle }
-    const type = e.target.getAttribute('class').split(' ')[ 0 ]
+    const type = e.target.getAttribute('class').split(' ')[0]
     this.props.onResizeStart && this.props.onResizeStart()
     this._isMouseDown = true
     const onMove = (e) => {
@@ -131,7 +154,7 @@ export default class Rect extends PureComponent {
     document.addEventListener('mouseup', onUp)
   }
 
-  render () {
+  render() {
     const {
       styles: {
         position: { centerX, centerY },
@@ -140,54 +163,92 @@ export default class Rect extends PureComponent {
       },
       zoomable,
       rotatable,
-      parentRotateAngle
+      parentRotateAngle,
+      children,
+      color,
+      itemId
     } = this.props
+
     const style = {
-      width: Math.abs(width),
-      height: Math.abs(height),
+      width: isFocused ? Math.abs(width) : Math.abs(width) - 1,
+      height: isFocused ? Math.abs(height) : Math.abs(height) - 1,
       transform: `rotate(${rotateAngle}deg)`,
       left: centerX - Math.abs(width) / 2,
       top: centerY - Math.abs(height) / 2
     }
-    const direction = zoomable.split(',').map(d => d.trim()).filter(d => d) // TODO: may be speed up
+
+    const direction = zoomable
+      .split(',')
+      .map((d) => d.trim())
+      .filter((d) => d) // TODO: may be speed up
+
+    const { isFocused } = this.state
 
     return (
-      <StyledRect
-        ref={this.setElementRef}
-        onMouseDown={this.startDrag}
-        className="rect single-resizer"
-        style={style}
-      >
-        {
-          rotatable &&
-          <div className="rotate" onMouseDown={this.startRotate}>
-            <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M10.536 3.464A5 5 0 1 0 11 10l1.424 1.425a7 7 0 1 1-.475-9.374L13.659.34A.2.2 0 0 1 14 .483V5.5a.5.5 0 0 1-.5.5H8.483a.2.2 0 0 1-.142-.341l2.195-2.195z"
-                fill="#eb5648"
-                fillRule="nonzero"
-              />
-            </svg>
+      <>
+        {isFocused ? (
+          <div
+            id={itemId}
+            ref={this.setElementRef}
+            onMouseDown={this.startDrag}
+            className="rect single-resizer"
+            style={{ ...style, borderColor: color }}
+            tabIndex="0"
+            onFocus={() => this.setState({ isFocused: true })}
+            onBlur={() => this.setState({ isFocused: false })}
+          >
+            {rotatable && (
+              <div className="rotate" onMouseDown={this.startRotate}>
+                <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.536 3.464A5 5 0 1 0 11 10l1.424 1.425a7 7 0 1 1-.475-9.374L13.659.34A.2.2 0 0 1 14 .483V5.5a.5.5 0 0 1-.5.5H8.483a.2.2 0 0 1-.142-.341l2.195-2.195z"
+                    fill={color}
+                    fillRule="nonzero"
+                  />
+                </svg>
+              </div>
+            )}
+
+            {direction.map((d) => {
+              const cursor = `${getCursor(
+                rotateAngle + parentRotateAngle,
+                d
+              )}-resize`
+              return (
+                <div
+                  key={d}
+                  className={`${zoomableMap[d]} resizable-handler`}
+                  style={{ cursor }}
+                  onMouseDown={(e) => this.startResize(e, cursor)}
+                />
+              )
+            })}
+
+            {direction.map((d) => {
+              return (
+                <div
+                  key={d}
+                  className={`${zoomableMap[d]} square`}
+                  style={{ borderColor: color }}
+                />
+              )
+            })}
+
+            <div className="childContainer">{children}</div>
           </div>
-        }
-
-        {
-          direction.map(d => {
-            const cursor = `${getCursor(rotateAngle + parentRotateAngle, d)}-resize`
-            return (
-              <div key={d} style={{ cursor }} className={`${zoomableMap[ d ]} resizable-handler`} onMouseDown={(e) => this.startResize(e, cursor)} />
-            )
-          })
-        }
-
-        {
-          direction.map(d => {
-            return (
-              <div key={d} className={`${zoomableMap[ d ]} square`} />
-            )
-          })
-        }
-      </StyledRect>
+        ) : (
+          <div
+            id={itemId}
+            style={style}
+            className="childContainer"
+            onFocus={() => this.setState({ isFocused: true })}
+            onBlur={() => this.setState({ isFocused: false })}
+            tabIndex="0"
+          >
+            {children}
+          </div>
+        )}
+      </>
     )
   }
 }

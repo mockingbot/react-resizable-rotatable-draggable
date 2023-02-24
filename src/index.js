@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import Rect from './Rect'
 import { centerToTL, tLToCenter, getNewStyle, degToRadian } from './utils'
 
+import { v4 as uuidv4 } from 'uuid'
+
 export default class ResizableRect extends Component {
   static propTypes = {
     left: PropTypes.number.isRequired,
@@ -15,10 +17,7 @@ export default class ResizableRect extends Component {
     zoomable: PropTypes.string,
     minWidth: PropTypes.number,
     minHeight: PropTypes.number,
-    aspectRatio: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.bool
-    ]),
+    aspectRatio: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     onRotateStart: PropTypes.func,
     onRotate: PropTypes.func,
     onRotateEnd: PropTypes.func,
@@ -27,7 +26,10 @@ export default class ResizableRect extends Component {
     onResizeEnd: PropTypes.func,
     onDragStart: PropTypes.func,
     onDrag: PropTypes.func,
-    onDragEnd: PropTypes.func
+    onDragEnd: PropTypes.func,
+    children: PropTypes.node,
+    color: PropTypes.string,
+    haveBoundary: PropTypes.bool
   }
 
   static defaultProps = {
@@ -36,7 +38,14 @@ export default class ResizableRect extends Component {
     rotatable: true,
     zoomable: '',
     minWidth: 10,
-    minHeight: 10
+    minHeight: 10,
+    color: 'black',
+    haveBoundary: true
+  }
+
+  constructor(props) {
+    super(props)
+    this.itemId = uuidv4()
   }
 
   handleRotate = (angle, startAngle) => {
@@ -61,27 +70,84 @@ export default class ResizableRect extends Component {
 
   handleResize = (length, alpha, rect, type, isShiftKey) => {
     if (!this.props.onResize) return
-    const { rotateAngle, aspectRatio, minWidth, minHeight, parentRotateAngle } = this.props
+    const { rotateAngle, aspectRatio, minWidth, minHeight, parentRotateAngle } =
+      this.props
     const beta = alpha - degToRadian(rotateAngle + parentRotateAngle)
     const deltaW = length * Math.cos(beta)
     const deltaH = length * Math.sin(beta)
-    const ratio = isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio
+    const ratio =
+      isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio
     const {
       position: { centerX, centerY },
       size: { width, height }
-    } = getNewStyle(type, { ...rect, rotateAngle }, deltaW, deltaH, ratio, minWidth, minHeight)
+    } = getNewStyle(
+      type,
+      { ...rect, rotateAngle },
+      deltaW,
+      deltaH,
+      ratio,
+      minWidth,
+      minHeight
+    )
 
-    this.props.onResize(centerToTL({ centerX, centerY, width, height, rotateAngle }), isShiftKey, type)
+    const values = centerToTL({ centerX, centerY, width, height, rotateAngle })
+
+    if (this.isOutOfBoundary(values.left, values.top, width, height)) {
+      return
+    }
+
+    this.props.onResize(values, isShiftKey, type)
+  }
+
+  isOutOfBoundary = (left, top, width, height) => {
+    const { haveBoundary } = this.props
+
+    const parentElement = document.getElementById(this.itemId).parentElement
+
+    if (
+      haveBoundary &&
+      (left <= 0 ||
+        left + width >= parentElement.offsetWidth ||
+        top <= 0 ||
+        top + height >= parentElement.offsetHeight)
+    ) {
+      return true
+    }
+
+    return false
   }
 
   handleDrag = (deltaX, deltaY) => {
-    this.props.onDrag && this.props.onDrag(deltaX, deltaY)
+    const { left, top, width, height } = this.props
+    const newLeft = left + deltaX
+    const newTop = top + deltaY
+
+    if (this.isOutOfBoundary(newLeft, newTop, width, height)) {
+      return
+    }
+
+    this.props.onDrag && this.props.onDrag(newLeft, newTop)
   }
 
-  render () {
+  render() {
     const {
-      top, left, width, height, rotateAngle, parentRotateAngle, zoomable, rotatable,
-      onRotate, onResizeStart, onResizeEnd, onRotateStart, onRotateEnd, onDragStart, onDragEnd
+      top,
+      left,
+      width,
+      height,
+      rotateAngle,
+      parentRotateAngle,
+      zoomable,
+      rotatable,
+      onRotate,
+      onResizeStart,
+      onResizeEnd,
+      onRotateStart,
+      onRotateEnd,
+      onDragStart,
+      onDragEnd,
+      children,
+      color
     } = this.props
 
     const styles = tLToCenter({ top, left, width, height, rotateAngle })
@@ -92,18 +158,18 @@ export default class ResizableRect extends Component {
         zoomable={zoomable}
         rotatable={Boolean(rotatable && onRotate)}
         parentRotateAngle={parentRotateAngle}
-
         onResizeStart={onResizeStart}
         onResize={this.handleResize}
         onResizeEnd={onResizeEnd}
-
         onRotateStart={onRotateStart}
         onRotate={this.handleRotate}
         onRotateEnd={onRotateEnd}
-
         onDragStart={onDragStart}
         onDrag={this.handleDrag}
         onDragEnd={onDragEnd}
+        children={children}
+        color={color}
+        itemId={this.itemId}
       />
     )
   }

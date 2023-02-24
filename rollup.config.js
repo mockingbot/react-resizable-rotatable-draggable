@@ -1,19 +1,21 @@
-import babel from 'rollup-plugin-babel'
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
+import babel from "rollup-plugin-babel";
+import resolve from "rollup-plugin-node-resolve";
+import commonjs from "rollup-plugin-commonjs";
+import css from "rollup-plugin-styles";
 
-import { main as packageMain, module as packageModule } from './package.json'
+import { main as packageMain, module as packageModule } from "./package.json";
 
 export default {
-  input: 'src/index.js',
+  input: "src/index.js",
   output: [
-    { file: packageMain, format: 'cjs', sourcemap: true },
-    { file: packageModule, format: 'es', sourcemap: true }
+    { file: packageMain, format: "cjs", sourcemap: true },
+    { file: packageModule, format: "es", sourcemap: true },
   ],
   plugins: [
-    babel({ exclude: 'node_modules/**' }),
+    babel({ exclude: "node_modules/**" }),
+    css(),
     resolve(),
-    commonjs()
+    commonjs(),
   ],
-  external: [ 'react', 'prop-types', 'styled-components' ]
-}
+  external: ["react", "prop-types"],
+};
