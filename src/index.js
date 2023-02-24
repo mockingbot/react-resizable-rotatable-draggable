@@ -1,55 +1,51 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import Rect from './Rect'
-import { centerToTL, tLToCenter, getNewStyle, degToRadian } from './utils'
-
+import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-export default class ResizableRect extends Component {
-  static propTypes = {
-    left: PropTypes.number.isRequired,
-    top: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    rotatable: PropTypes.bool,
-    rotateAngle: PropTypes.number,
-    parentRotateAngle: PropTypes.number,
-    zoomable: PropTypes.string,
-    minWidth: PropTypes.number,
-    minHeight: PropTypes.number,
-    aspectRatio: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-    onRotateStart: PropTypes.func,
-    onRotate: PropTypes.func,
-    onRotateEnd: PropTypes.func,
-    onResizeStart: PropTypes.func,
-    onResize: PropTypes.func,
-    onResizeEnd: PropTypes.func,
-    onDragStart: PropTypes.func,
-    onDrag: PropTypes.func,
-    onDragEnd: PropTypes.func,
-    children: PropTypes.node,
-    color: PropTypes.string,
-    haveBoundary: PropTypes.bool
-  }
+import {
+  centerToTL,
+  tLToCenter,
+  getNewStyle,
+  degToRadian,
+  isOutOfBoundary
+} from './utils'
+import Rect from './Rect'
 
-  static defaultProps = {
-    parentRotateAngle: 0,
-    rotateAngle: 0,
-    rotatable: true,
-    zoomable: '',
-    minWidth: 10,
-    minHeight: 10,
-    color: 'black',
-    haveBoundary: true
-  }
+export default function ResizableRect({
+  rotatable = true,
+  parentRotateAngle = 0,
+  zoomable = '',
+  minWidth = 10,
+  minHeight = 10,
+  aspectRatio,
+  onRotateStart,
+  onRotate,
+  onRotateEnd,
+  onResizeStart,
+  onResize,
+  onResizeEnd,
+  onDragStart,
+  onDrag,
+  onDragEnd,
+  children,
+  color = 'black',
+  haveBoundary = true,
+  defaultTop = 30,
+  defaultLeft = 30,
+  defaultWidth = 100,
+  defaultHeight = 100,
+  defaultRotateAngle = 0
+}) {
+  const [top, setTop] = useState(defaultTop)
+  const [left, setLeft] = useState(defaultLeft)
+  const [width, setWidth] = useState(defaultWidth)
+  const [height, setHeight] = useState(defaultHeight)
+  const [rotateAngle, setRotateAngle] = useState(defaultRotateAngle)
+  const [itemId, setItemId] = useState(uuidv4())
 
-  constructor(props) {
-    super(props)
-    this.itemId = uuidv4()
-  }
+  const styles = tLToCenter({ top, left, width, height, rotateAngle })
 
-  handleRotate = (angle, startAngle) => {
-    if (!this.props.onRotate) return
+  const handleRotate = (angle, startAngle) => {
+    if (!onRotate) return
     let rotateAngle = Math.round(startAngle + angle)
     if (rotateAngle >= 360) {
       rotateAngle -= 360
@@ -65,13 +61,14 @@ export default class ResizableRect extends Component {
     } else if (rotateAngle > 266 && rotateAngle < 274) {
       rotateAngle = 270
     }
-    this.props.onRotate(rotateAngle)
+
+    setRotateAngle(rotateAngle)
+    onRotate(rotateAngle)
   }
 
-  handleResize = (length, alpha, rect, type, isShiftKey) => {
-    if (!this.props.onResize) return
-    const { rotateAngle, aspectRatio, minWidth, minHeight, parentRotateAngle } =
-      this.props
+  const handleResize = (length, alpha, rect, type, isShiftKey) => {
+    if (!onResize) return
+
     const beta = alpha - degToRadian(rotateAngle + parentRotateAngle)
     const deltaW = length * Math.cos(beta)
     const deltaH = length * Math.sin(beta)
@@ -92,85 +89,56 @@ export default class ResizableRect extends Component {
 
     const values = centerToTL({ centerX, centerY, width, height, rotateAngle })
 
-    if (this.isOutOfBoundary(values.left, values.top, width, height)) {
+    if (
+      isOutOfBoundary(
+        values.left,
+        values.top,
+        width,
+        height,
+        haveBoundary,
+        itemId
+      )
+    ) {
       return
     }
 
-    this.props.onResize(values, isShiftKey, type)
+    setHeight(height)
+    setWidth(width)
+
+    onResize(values, isShiftKey, type)
   }
 
-  isOutOfBoundary = (left, top, width, height) => {
-    const { haveBoundary } = this.props
-
-    const parentElement = document.getElementById(this.itemId).parentElement
-
-    if (
-      haveBoundary &&
-      (left <= 0 ||
-        left + width >= parentElement.offsetWidth ||
-        top <= 0 ||
-        top + height >= parentElement.offsetHeight)
-    ) {
-      return true
-    }
-
-    return false
-  }
-
-  handleDrag = (deltaX, deltaY) => {
-    const { left, top, width, height } = this.props
+  const handleDrag = (deltaX, deltaY) => {
     const newLeft = left + deltaX
     const newTop = top + deltaY
 
-    if (this.isOutOfBoundary(newLeft, newTop, width, height)) {
+    if (isOutOfBoundary(newLeft, newTop, width, height, haveBoundary, itemId)) {
       return
     }
 
-    this.props.onDrag && this.props.onDrag(newLeft, newTop)
+    setLeft(newLeft)
+    setTop(newTop)
+    onDrag && onDrag(newLeft, newTop)
   }
 
-  render() {
-    const {
-      top,
-      left,
-      width,
-      height,
-      rotateAngle,
-      parentRotateAngle,
-      zoomable,
-      rotatable,
-      onRotate,
-      onResizeStart,
-      onResizeEnd,
-      onRotateStart,
-      onRotateEnd,
-      onDragStart,
-      onDragEnd,
-      children,
-      color
-    } = this.props
-
-    const styles = tLToCenter({ top, left, width, height, rotateAngle })
-
-    return (
-      <Rect
-        styles={styles}
-        zoomable={zoomable}
-        rotatable={Boolean(rotatable && onRotate)}
-        parentRotateAngle={parentRotateAngle}
-        onResizeStart={onResizeStart}
-        onResize={this.handleResize}
-        onResizeEnd={onResizeEnd}
-        onRotateStart={onRotateStart}
-        onRotate={this.handleRotate}
-        onRotateEnd={onRotateEnd}
-        onDragStart={onDragStart}
-        onDrag={this.handleDrag}
-        onDragEnd={onDragEnd}
-        children={children}
-        color={color}
-        itemId={this.itemId}
-      />
-    )
-  }
+  return (
+    <Rect
+      styles={styles}
+      zoomable={zoomable}
+      rotatable={Boolean(rotatable && onRotate)}
+      parentRotateAngle={parentRotateAngle}
+      onResizeStart={onResizeStart}
+      onResize={handleResize}
+      onResizeEnd={onResizeEnd}
+      onRotateStart={onRotateStart}
+      onRotate={handleRotate}
+      onRotateEnd={onRotateEnd}
+      onDragStart={onDragStart}
+      onDrag={handleDrag}
+      onDragEnd={onDragEnd}
+      children={children}
+      color={color}
+      itemId={itemId}
+    />
+  )
 }

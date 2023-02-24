@@ -40,11 +40,6 @@ class App extends PureComponent {
     return (
       <ResizableRect
         {...{
-          top,
-          left,
-          width,
-          height,
-          rotateAngle,
           // aspectRatio: 1,
           // minWidth: -Infinity,
           // minHeight: -Infinity,

@@ -262,3 +262,26 @@ export const tLToCenter = ({ top, left, width, height, rotateAngle }) => ({
     rotateAngle
   }
 })
+
+export const isOutOfBoundary = (
+  left,
+  top,
+  width,
+  height,
+  haveBoundary,
+  itemId
+) => {
+  const parentElement = document.getElementById(itemId).parentElement
+
+  if (
+    haveBoundary &&
+    (left <= 0 ||
+      left + width >= parentElement.offsetWidth ||
+      top <= 0 ||
+      top + height >= parentElement.offsetHeight)
+  ) {
+    return true
+  }
+
+  return false
+}
