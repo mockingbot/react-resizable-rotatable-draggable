@@ -792,7 +792,9 @@ function ResizableRect(_ref) {
     _ref$defaultFocus = _ref.defaultFocus,
     defaultFocus = _ref$defaultFocus === void 0 ? false : _ref$defaultFocus,
     _ref$focusChange = _ref.focusChange,
-    focusChange = _ref$focusChange === void 0 ? true : _ref$focusChange;
+    focusChange = _ref$focusChange === void 0 ? true : _ref$focusChange,
+    _ref$id = _ref.id,
+    id = _ref$id === void 0 ? 'default_id' : _ref$id;
   var _useState = React.useState(defaultTop),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
@@ -814,7 +816,7 @@ function ResizableRect(_ref) {
     rotateAngle = _useState10[0],
     setRotateAngle = _useState10[1];
   // const [itemId, setItemId] = useState(uuidv4())
-  var _useState11 = React.useState('iusdhfoishd'),
+  var _useState11 = React.useState(id),
     _useState12 = _slicedToArray(_useState11, 2),
     itemId = _useState12[0];
     _useState12[1];

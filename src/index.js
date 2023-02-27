@@ -35,7 +35,8 @@ export default function ResizableRect({
   defaultHeight = 100,
   defaultRotateAngle = 0,
   defaultFocus = false,
-  focusChange = true
+  focusChange = true,
+  id = 'default_id'
 }) {
   const [top, setTop] = useState(defaultTop)
   const [left, setLeft] = useState(defaultLeft)
@@ -43,7 +44,7 @@ export default function ResizableRect({
   const [height, setHeight] = useState(defaultHeight)
   const [rotateAngle, setRotateAngle] = useState(defaultRotateAngle)
   // const [itemId, setItemId] = useState(uuidv4())
-  const [itemId, setItemId] = useState('iusdhfoishd')
+  const [itemId, setItemId] = useState(id)
 
   const styles = tLToCenter({ top, left, width, height, rotateAngle })
 
