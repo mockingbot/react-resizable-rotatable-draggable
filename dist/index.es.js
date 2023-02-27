@@ -620,6 +620,12 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
     return _this;
   }
   _createClass(Rect, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var onFocusChange = this.props.onFocusChange;
+      onFocusChange && onFocusChange(this.state.isFocused);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -743,7 +749,8 @@ _defineProperty(Rect, "propTypes", {
   color: PropTypes.color,
   itemId: PropTypes.string,
   focusChange: PropTypes.bool,
-  defaultFocus: PropTypes.bool
+  defaultFocus: PropTypes.bool,
+  onFocusChange: PropTypes.func
 });
 
 function ResizableRect(_ref) {
@@ -787,7 +794,8 @@ function ResizableRect(_ref) {
     _ref$focusChange = _ref.focusChange,
     focusChange = _ref$focusChange === void 0 ? true : _ref$focusChange,
     _ref$id = _ref.id,
-    id = _ref$id === void 0 ? 'default_id' : _ref$id;
+    id = _ref$id === void 0 ? 'default_id' : _ref$id,
+    onFocusChange = _ref.onFocusChange;
   var _useState = useState(defaultTop),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
@@ -897,7 +905,8 @@ function ResizableRect(_ref) {
     color: color,
     itemId: itemId,
     defaultFocus: defaultFocus,
-    focusChange: focusChange
+    focusChange: focusChange,
+    onFocusChange: onFocusChange
   });
 }
 

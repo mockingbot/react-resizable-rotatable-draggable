@@ -36,7 +36,8 @@ export default function ResizableRect({
   defaultRotateAngle = 0,
   defaultFocus = false,
   focusChange = true,
-  id = 'default_id'
+  id = 'default_id',
+  onFocusChange
 }) {
   const [top, setTop] = useState(defaultTop)
   const [left, setLeft] = useState(defaultLeft)
@@ -145,6 +146,7 @@ export default function ResizableRect({
       itemId={itemId}
       defaultFocus={defaultFocus}
       focusChange={focusChange}
+      onFocusChange={onFocusChange}
     />
   )
 }

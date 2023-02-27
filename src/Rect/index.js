@@ -34,7 +34,8 @@ export default class Rect extends PureComponent {
     color: PropTypes.color,
     itemId: PropTypes.string,
     focusChange: PropTypes.bool,
-    defaultFocus: PropTypes.bool
+    defaultFocus: PropTypes.bool,
+    onFocusChange: PropTypes.func
   }
 
   constructor(props) {
@@ -46,6 +47,11 @@ export default class Rect extends PureComponent {
 
   setElementRef = (ref) => {
     this.$element = ref
+  }
+
+  componentDidUpdate() {
+    const { onFocusChange } = this.props
+    onFocusChange && onFocusChange(this.state.isFocused)
   }
 
   // Drag

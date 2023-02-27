@@ -58,7 +58,6 @@ class App extends PureComponent {
           style={{ width: '100%', height: '100%' }}
           onClick={(e) => {
             // e.stopPropagation()
-            alert('CLICKED')
           }}
         >
           Click Me
