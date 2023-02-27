@@ -57,7 +57,7 @@ class App extends PureComponent {
         <button
           style={{ width: '100%', height: '100%' }}
           onClick={(e) => {
-            e.stopPropagation()
+            // e.stopPropagation()
             alert('CLICKED')
           }}
         >
