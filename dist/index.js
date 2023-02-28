@@ -652,7 +652,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         color = _this$props.color,
         itemId = _this$props.itemId,
         focusChange = _this$props.focusChange,
-        customStyle = _this$props.customStyle;
+        isDraggable = _this$props.isDraggable;
       var style = {
         width: isFocused ? Math.abs(width) : Math.abs(width) - 1,
         height: isFocused ? Math.abs(height) : Math.abs(height) - 1,
@@ -667,15 +667,15 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
       }); // TODO: may be speed up
 
       var isFocused = this.state.isFocused;
-      console.log('CIDD', style);
       return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, isFocused ? /*#__PURE__*/React__default["default"].createElement("div", {
         id: itemId,
         ref: this.setElementRef,
         onMouseDown: this.startDrag,
         className: "rect single-resizer",
         style: _objectSpread2(_objectSpread2({}, style), {}, {
-          borderColor: color
-        }, customStyle),
+          borderColor: color,
+          position: isDraggable ? 'absolute' : 'relative'
+        }),
         tabIndex: "0",
         onFocus: function onFocus() {
           return focusChange && _this2.setState({
@@ -722,7 +722,9 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         className: "childContainer"
       }, children)) : /*#__PURE__*/React__default["default"].createElement("div", {
         id: itemId,
-        style: _objectSpread2(_objectSpread2({}, style), customStyle),
+        style: _objectSpread2(_objectSpread2({}, style), {}, {
+          position: isDraggable ? 'absolute' : 'relative'
+        }),
         className: "childContainer",
         onFocus: function onFocus() {
           return focusChange && _this2.setState({
@@ -742,7 +744,6 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
 }(React.PureComponent);
 _defineProperty(Rect, "propTypes", {
   styles: PropTypes__default["default"].object,
-  customStyle: PropTypes__default["default"].object,
   zoomable: PropTypes__default["default"].string,
   rotatable: PropTypes__default["default"].bool,
   onResizeStart: PropTypes__default["default"].func,
@@ -760,6 +761,7 @@ _defineProperty(Rect, "propTypes", {
   itemId: PropTypes__default["default"].string,
   focusChange: PropTypes__default["default"].bool,
   defaultFocus: PropTypes__default["default"].bool,
+  isDraggable: PropTypes__default["default"].bool,
   onFocusChange: PropTypes__default["default"].func
 });
 
@@ -805,8 +807,7 @@ function ResizableRect(_ref) {
     focusChange = _ref$focusChange === void 0 ? true : _ref$focusChange,
     _ref$id = _ref.id,
     id = _ref$id === void 0 ? 'default_id' : _ref$id,
-    onFocusChange = _ref.onFocusChange,
-    customStyle = _ref.customStyle;
+    onFocusChange = _ref.onFocusChange;
   var _useState = React.useState(defaultTop),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
@@ -912,14 +913,14 @@ function ResizableRect(_ref) {
     onRotateEnd: onRotateEnd,
     onDragStart: onDragStart,
     onDrag: handleDrag,
+    isDraggable: onDrag !== undefined,
     onDragEnd: onDragEnd,
     children: children,
     color: color,
     itemId: itemId,
     defaultFocus: defaultFocus,
     focusChange: focusChange,
-    onFocusChange: onFocusChange,
-    customStyle: customStyle
+    onFocusChange: onFocusChange
   });
 }
 

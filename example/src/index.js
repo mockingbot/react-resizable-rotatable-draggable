@@ -49,8 +49,7 @@ class App extends PureComponent {
           onResize: this.handleResize,
           // onDrag: this.handleDrag,
           focusChange: true,
-          defaultFocus: true,
-          customStyle: { padding: '10px', backgroundColor: 'red' }
+          defaultFocus: true
           // haveBoundary: false,
           // color: 'red'
         }}

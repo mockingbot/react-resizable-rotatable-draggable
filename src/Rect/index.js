@@ -18,7 +18,6 @@ const zoomableMap = {
 export default class Rect extends PureComponent {
   static propTypes = {
     styles: PropTypes.object,
-    customStyle: PropTypes.object,
     zoomable: PropTypes.string,
     rotatable: PropTypes.bool,
     onResizeStart: PropTypes.func,
@@ -36,6 +35,7 @@ export default class Rect extends PureComponent {
     itemId: PropTypes.string,
     focusChange: PropTypes.bool,
     defaultFocus: PropTypes.bool,
+    isDraggable: PropTypes.bool,
     onFocusChange: PropTypes.func
   }
 
@@ -177,7 +177,7 @@ export default class Rect extends PureComponent {
       color,
       itemId,
       focusChange,
-      customStyle
+      isDraggable
     } = this.props
 
     const style = {
@@ -195,8 +195,6 @@ export default class Rect extends PureComponent {
 
     const { isFocused } = this.state
 
-    console.log('CIDD', style)
-
     return (
       <>
         {isFocused ? (
@@ -205,7 +203,11 @@ export default class Rect extends PureComponent {
             ref={this.setElementRef}
             onMouseDown={this.startDrag}
             className="rect single-resizer"
-            style={{ ...style, borderColor: color, ...customStyle }}
+            style={{
+              ...style,
+              borderColor: color,
+              position: isDraggable ? 'absolute' : 'relative'
+            }}
             tabIndex="0"
             onFocus={() => focusChange && this.setState({ isFocused: true })}
             onBlur={() => focusChange && this.setState({ isFocused: false })}
@@ -252,7 +254,10 @@ export default class Rect extends PureComponent {
         ) : (
           <div
             id={itemId}
-            style={{ ...style, ...customStyle }}
+            style={{
+              ...style,
+              position: isDraggable ? 'absolute' : 'relative'
+            }}
             className="childContainer"
             onFocus={() => focusChange && this.setState({ isFocused: true })}
             onBlur={() => focusChange && this.setState({ isFocused: false })}
