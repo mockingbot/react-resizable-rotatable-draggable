@@ -37,7 +37,8 @@ export default function ResizableRect({
   defaultFocus = false,
   focusChange = true,
   id = 'default_id',
-  onFocusChange
+  onFocusChange,
+  customStyle
 }) {
   const [top, setTop] = useState(defaultTop)
   const [left, setLeft] = useState(defaultLeft)
@@ -149,6 +150,7 @@ export default function ResizableRect({
       defaultFocus={defaultFocus}
       focusChange={focusChange}
       onFocusChange={onFocusChange}
+      customStyle={customStyle}
     />
   )
 }

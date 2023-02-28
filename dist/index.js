@@ -651,7 +651,8 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         children = _this$props.children,
         color = _this$props.color,
         itemId = _this$props.itemId,
-        focusChange = _this$props.focusChange;
+        focusChange = _this$props.focusChange,
+        customStyle = _this$props.customStyle;
       var style = {
         width: isFocused ? Math.abs(width) : Math.abs(width) - 1,
         height: isFocused ? Math.abs(height) : Math.abs(height) - 1,
@@ -666,6 +667,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
       }); // TODO: may be speed up
 
       var isFocused = this.state.isFocused;
+      console.log('CIDD', style);
       return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, isFocused ? /*#__PURE__*/React__default["default"].createElement("div", {
         id: itemId,
         ref: this.setElementRef,
@@ -673,7 +675,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         className: "rect single-resizer",
         style: _objectSpread2(_objectSpread2({}, style), {}, {
           borderColor: color
-        }),
+        }, customStyle),
         tabIndex: "0",
         onFocus: function onFocus() {
           return focusChange && _this2.setState({
@@ -740,6 +742,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
 }(React.PureComponent);
 _defineProperty(Rect, "propTypes", {
   styles: PropTypes__default["default"].object,
+  customStyle: PropTypes__default["default"].object,
   zoomable: PropTypes__default["default"].string,
   rotatable: PropTypes__default["default"].bool,
   onResizeStart: PropTypes__default["default"].func,
@@ -802,7 +805,8 @@ function ResizableRect(_ref) {
     focusChange = _ref$focusChange === void 0 ? true : _ref$focusChange,
     _ref$id = _ref.id,
     id = _ref$id === void 0 ? 'default_id' : _ref$id,
-    onFocusChange = _ref.onFocusChange;
+    onFocusChange = _ref.onFocusChange,
+    customStyle = _ref.customStyle;
   var _useState = React.useState(defaultTop),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
@@ -914,7 +918,8 @@ function ResizableRect(_ref) {
     itemId: itemId,
     defaultFocus: defaultFocus,
     focusChange: focusChange,
-    onFocusChange: onFocusChange
+    onFocusChange: onFocusChange,
+    customStyle: customStyle
   });
 }
 

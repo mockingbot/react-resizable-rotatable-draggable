@@ -644,7 +644,8 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         children = _this$props.children,
         color = _this$props.color,
         itemId = _this$props.itemId,
-        focusChange = _this$props.focusChange;
+        focusChange = _this$props.focusChange,
+        customStyle = _this$props.customStyle;
       var style = {
         width: isFocused ? Math.abs(width) : Math.abs(width) - 1,
         height: isFocused ? Math.abs(height) : Math.abs(height) - 1,
@@ -659,6 +660,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
       }); // TODO: may be speed up
 
       var isFocused = this.state.isFocused;
+      console.log('CIDD', style);
       return /*#__PURE__*/React.createElement(React.Fragment, null, isFocused ? /*#__PURE__*/React.createElement("div", {
         id: itemId,
         ref: this.setElementRef,
@@ -666,7 +668,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         className: "rect single-resizer",
         style: _objectSpread2(_objectSpread2({}, style), {}, {
           borderColor: color
-        }),
+        }, customStyle),
         tabIndex: "0",
         onFocus: function onFocus() {
           return focusChange && _this2.setState({
@@ -733,6 +735,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
 }(PureComponent);
 _defineProperty(Rect, "propTypes", {
   styles: PropTypes.object,
+  customStyle: PropTypes.object,
   zoomable: PropTypes.string,
   rotatable: PropTypes.bool,
   onResizeStart: PropTypes.func,
@@ -795,7 +798,8 @@ function ResizableRect(_ref) {
     focusChange = _ref$focusChange === void 0 ? true : _ref$focusChange,
     _ref$id = _ref.id,
     id = _ref$id === void 0 ? 'default_id' : _ref$id,
-    onFocusChange = _ref.onFocusChange;
+    onFocusChange = _ref.onFocusChange,
+    customStyle = _ref.customStyle;
   var _useState = useState(defaultTop),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
@@ -907,7 +911,8 @@ function ResizableRect(_ref) {
     itemId: itemId,
     defaultFocus: defaultFocus,
     focusChange: focusChange,
-    onFocusChange: onFocusChange
+    onFocusChange: onFocusChange,
+    customStyle: customStyle
   });
 }
 
