@@ -715,7 +715,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         className: "childContainer"
       }, children)) : /*#__PURE__*/React.createElement("div", {
         id: itemId,
-        style: style,
+        style: _objectSpread2(_objectSpread2({}, style), customStyle),
         className: "childContainer",
         onFocus: function onFocus() {
           return focusChange && _this2.setState({

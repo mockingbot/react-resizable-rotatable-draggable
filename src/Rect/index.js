@@ -252,7 +252,7 @@ export default class Rect extends PureComponent {
         ) : (
           <div
             id={itemId}
-            style={style}
+            style={{ ...style, ...customStyle }}
             className="childContainer"
             onFocus={() => focusChange && this.setState({ isFocused: true })}
             onBlur={() => focusChange && this.setState({ isFocused: false })}
