@@ -275,9 +275,9 @@ export const isOutOfBoundary = (
 
   if (
     haveBoundary &&
-    (left <= 0 ||
+    (left < 0 ||
       left + width >= parentElement.offsetWidth ||
-      top <= 0 ||
+      top < 0 ||
       top + height >= parentElement.offsetHeight)
   ) {
     return true

@@ -476,7 +476,7 @@ var tLToCenter = function tLToCenter(_ref4) {
 };
 var isOutOfBoundary = function isOutOfBoundary(left, top, width, height, haveBoundary, itemId) {
   var parentElement = document.getElementById(itemId).parentElement;
-  if (haveBoundary && (left <= 0 || left + width >= parentElement.offsetWidth || top <= 0 || top + height >= parentElement.offsetHeight)) {
+  if (haveBoundary && (left < 0 || left + width >= parentElement.offsetWidth || top < 0 || top + height >= parentElement.offsetHeight)) {
     return true;
   }
   return false;
