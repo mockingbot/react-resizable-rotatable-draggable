@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uuidv4 } from 'uuid'
 
 import {
   centerToTL,
@@ -33,14 +33,19 @@ export default function ResizableRect({
   defaultLeft = 30,
   defaultWidth = 100,
   defaultHeight = 100,
-  defaultRotateAngle = 0
+  defaultRotateAngle = 0,
+  defaultFocus = false,
+  focusChange = true,
+  id = 'default_id',
+  onFocusChange
 }) {
   const [top, setTop] = useState(defaultTop)
   const [left, setLeft] = useState(defaultLeft)
   const [width, setWidth] = useState(defaultWidth)
   const [height, setHeight] = useState(defaultHeight)
   const [rotateAngle, setRotateAngle] = useState(defaultRotateAngle)
-  const [itemId, setItemId] = useState(uuidv4())
+  // const [itemId, setItemId] = useState(uuidv4())
+  const [itemId, setItemId] = useState(id)
 
   const styles = tLToCenter({ top, left, width, height, rotateAngle })
 
@@ -109,6 +114,8 @@ export default function ResizableRect({
   }
 
   const handleDrag = (deltaX, deltaY) => {
+    if (!onDrag) return
+
     const newLeft = left + deltaX
     const newTop = top + deltaY
 
@@ -135,10 +142,14 @@ export default function ResizableRect({
       onRotateEnd={onRotateEnd}
       onDragStart={onDragStart}
       onDrag={handleDrag}
+      isDraggable={onDrag !== undefined}
       onDragEnd={onDragEnd}
       children={children}
       color={color}
       itemId={itemId}
+      defaultFocus={defaultFocus}
+      focusChange={focusChange}
+      onFocusChange={onFocusChange}
     />
   )
 }

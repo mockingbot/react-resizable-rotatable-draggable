@@ -32,18 +32,27 @@ export default class Rect extends PureComponent {
     parentRotateAngle: PropTypes.number,
     children: PropTypes.node,
     color: PropTypes.color,
-    itemId: PropTypes.string
+    itemId: PropTypes.string,
+    focusChange: PropTypes.bool,
+    defaultFocus: PropTypes.bool,
+    isDraggable: PropTypes.bool,
+    onFocusChange: PropTypes.func
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      isFocused: false
+      isFocused: props.defaultFocus ?? false
     }
   }
 
   setElementRef = (ref) => {
     this.$element = ref
+  }
+
+  componentDidUpdate() {
+    const { onFocusChange } = this.props
+    onFocusChange && onFocusChange(this.state.isFocused)
   }
 
   // Drag
@@ -166,7 +175,9 @@ export default class Rect extends PureComponent {
       parentRotateAngle,
       children,
       color,
-      itemId
+      itemId,
+      focusChange,
+      isDraggable
     } = this.props
 
     const style = {
@@ -192,10 +203,14 @@ export default class Rect extends PureComponent {
             ref={this.setElementRef}
             onMouseDown={this.startDrag}
             className="rect single-resizer"
-            style={{ ...style, borderColor: color }}
+            style={{
+              ...style,
+              borderColor: color,
+              position: isDraggable ? 'absolute' : 'relative'
+            }}
             tabIndex="0"
-            onFocus={() => this.setState({ isFocused: true })}
-            onBlur={() => this.setState({ isFocused: false })}
+            onFocus={() => focusChange && this.setState({ isFocused: true })}
+            onBlur={() => focusChange && this.setState({ isFocused: false })}
           >
             {rotatable && (
               <div className="rotate" onMouseDown={this.startRotate}>
@@ -239,10 +254,13 @@ export default class Rect extends PureComponent {
         ) : (
           <div
             id={itemId}
-            style={style}
+            style={{
+              ...style,
+              position: isDraggable ? 'absolute' : 'relative'
+            }}
             className="childContainer"
-            onFocus={() => this.setState({ isFocused: true })}
-            onBlur={() => this.setState({ isFocused: false })}
+            onFocus={() => focusChange && this.setState({ isFocused: true })}
+            onBlur={() => focusChange && this.setState({ isFocused: false })}
             tabIndex="0"
           >
             {children}

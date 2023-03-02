@@ -45,17 +45,23 @@ class App extends PureComponent {
           // minHeight: -Infinity,
           zoomable: 'n, w, s, e, nw, ne, se, sw',
           // rotatable: true,
-          onRotate: this.handleRotate,
+          // onRotate: this.handleRotate,
           onResize: this.handleResize,
-          onDrag: this.handleDrag
+          // onDrag: this.handleDrag,
+          focusChange: true,
+          defaultFocus: true
           // haveBoundary: false,
           // color: 'red'
         }}
       >
-        <img
-          src="https://via.placeholder.com/200x300.png"
-          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-        />
+        <button
+          style={{ width: '100%', height: '100%' }}
+          onClick={(e) => {
+            // e.stopPropagation()
+          }}
+        >
+          Click Me
+        </button>
       </ResizableRect>
     )
   }
