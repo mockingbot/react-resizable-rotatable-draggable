@@ -840,6 +840,12 @@ function ResizableRect(_ref) {
     height: height,
     rotateAngle: rotateAngle
   });
+  React.useEffect(function () {
+    setHeight(defaultHeight);
+  }, [defaultHeight]);
+  React.useEffect(function () {
+    setWidth(defaultWidth);
+  }, [defaultWidth]);
   var handleRotate = function handleRotate(angle, startAngle) {
     if (!onRotate) return;
     var rotateAngle = Math.round(startAngle + angle);

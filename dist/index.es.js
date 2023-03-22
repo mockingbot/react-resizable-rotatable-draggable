@@ -1,4 +1,4 @@
-import React, { PureComponent, useState } from 'react';
+import React, { PureComponent, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function _iterableToArrayLimit(arr, i) {
@@ -833,6 +833,12 @@ function ResizableRect(_ref) {
     height: height,
     rotateAngle: rotateAngle
   });
+  useEffect(function () {
+    setHeight(defaultHeight);
+  }, [defaultHeight]);
+  useEffect(function () {
+    setWidth(defaultWidth);
+  }, [defaultWidth]);
   var handleRotate = function handleRotate(angle, startAngle) {
     if (!onRotate) return;
     var rotateAngle = Math.round(startAngle + angle);
