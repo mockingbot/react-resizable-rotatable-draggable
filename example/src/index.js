@@ -39,9 +39,14 @@ class App extends PureComponent {
     const { top, left, width, height, rotateAngle } = this.state
     return (
       <>
-        <button onClick={() => this.setState({ height: 100, width: 100 })}>
+        <button
+          onClick={() =>
+            this.setState({ height: 100, width: 100, top: 10, left: 10 })
+          }
+        >
           Update
         </button>
+
         <ResizableRect
           {...{
             // aspectRatio: 1,
@@ -51,23 +56,19 @@ class App extends PureComponent {
             // rotatable: true,
             // onRotate: this.handleRotate,
             onResize: this.handleResize,
-            // onDrag: this.handleDrag,
+            onDrag: this.handleDrag,
             focusChange: true,
             defaultFocus: true,
-            defaultHeight: height,
-            defaultWidth: width
+            height: height,
+            width: width,
+            top: top,
+            left: left,
+            initValues: { top: 10, left: 10, height: 100, width: 100 }
             // haveBoundary: false,
             // color: 'red'
           }}
         >
-          <button
-            style={{ width: '100%', height: '100%' }}
-            onClick={(e) => {
-              // e.stopPropagation()
-            }}
-          >
-            Click Me
-          </button>
+          <div style={{ width: '100%', height: '100%', background: 'cyan' }} />
         </ResizableRect>
       </>
     )

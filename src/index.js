@@ -29,20 +29,22 @@ export default function ResizableRect({
   children,
   color = 'black',
   haveBoundary = true,
-  defaultTop = 30,
-  defaultLeft = 30,
-  defaultWidth = 100,
-  defaultHeight = 100,
   defaultRotateAngle = 0,
   defaultFocus = false,
   focusChange = true,
   id = 'default_id',
-  onFocusChange
+  onFocusChange,
+
+  initValues,
+  height: propHeight = 100,
+  width: propWidth = 100,
+  top: propTop = 0,
+  left: propLeft = 0
 }) {
-  const [top, setTop] = useState(defaultTop)
-  const [left, setLeft] = useState(defaultLeft)
-  const [width, setWidth] = useState(defaultWidth)
-  const [height, setHeight] = useState(defaultHeight)
+  const [top, setTop] = useState(initValues.top ?? 10)
+  const [left, setLeft] = useState(initValues.left ?? 10)
+  const [width, setWidth] = useState(initValues.width ?? 100)
+  const [height, setHeight] = useState(initValues.height ?? 100)
   const [rotateAngle, setRotateAngle] = useState(defaultRotateAngle)
   // const [itemId, setItemId] = useState(uuidv4())
   const [itemId, setItemId] = useState(id)
@@ -50,12 +52,20 @@ export default function ResizableRect({
   const styles = tLToCenter({ top, left, width, height, rotateAngle })
 
   useEffect(() => {
-    setHeight(defaultHeight)
-  }, [defaultHeight])
+    setHeight(propHeight)
+  }, [propHeight])
 
   useEffect(() => {
-    setWidth(defaultWidth)
-  }, [defaultWidth])
+    setWidth(propWidth)
+  }, [propWidth])
+
+  useEffect(() => {
+    setTop(propTop)
+  }, [propTop])
+
+  useEffect(() => {
+    setLeft(propLeft)
+  }, [propLeft])
 
   const handleRotate = (angle, startAngle) => {
     if (!onRotate) return

@@ -766,6 +766,7 @@ _defineProperty(Rect, "propTypes", {
 });
 
 function ResizableRect(_ref) {
+  var _initValues$top, _initValues$left, _initValues$width, _initValues$height;
   var _ref$rotatable = _ref.rotatable,
     rotatable = _ref$rotatable === void 0 ? true : _ref$rotatable,
     _ref$parentRotateAngl = _ref.parentRotateAngle,
@@ -791,14 +792,6 @@ function ResizableRect(_ref) {
     color = _ref$color === void 0 ? 'black' : _ref$color,
     _ref$haveBoundary = _ref.haveBoundary,
     haveBoundary = _ref$haveBoundary === void 0 ? true : _ref$haveBoundary,
-    _ref$defaultTop = _ref.defaultTop,
-    defaultTop = _ref$defaultTop === void 0 ? 30 : _ref$defaultTop,
-    _ref$defaultLeft = _ref.defaultLeft,
-    defaultLeft = _ref$defaultLeft === void 0 ? 30 : _ref$defaultLeft,
-    _ref$defaultWidth = _ref.defaultWidth,
-    defaultWidth = _ref$defaultWidth === void 0 ? 100 : _ref$defaultWidth,
-    _ref$defaultHeight = _ref.defaultHeight,
-    defaultHeight = _ref$defaultHeight === void 0 ? 100 : _ref$defaultHeight,
     _ref$defaultRotateAng = _ref.defaultRotateAngle,
     defaultRotateAngle = _ref$defaultRotateAng === void 0 ? 0 : _ref$defaultRotateAng,
     _ref$defaultFocus = _ref.defaultFocus,
@@ -807,20 +800,29 @@ function ResizableRect(_ref) {
     focusChange = _ref$focusChange === void 0 ? true : _ref$focusChange,
     _ref$id = _ref.id,
     id = _ref$id === void 0 ? 'default_id' : _ref$id,
-    onFocusChange = _ref.onFocusChange;
-  var _useState = React.useState(defaultTop),
+    onFocusChange = _ref.onFocusChange,
+    initValues = _ref.initValues,
+    _ref$height = _ref.height,
+    propHeight = _ref$height === void 0 ? 100 : _ref$height,
+    _ref$width = _ref.width,
+    propWidth = _ref$width === void 0 ? 100 : _ref$width,
+    _ref$top = _ref.top,
+    propTop = _ref$top === void 0 ? 0 : _ref$top,
+    _ref$left = _ref.left,
+    propLeft = _ref$left === void 0 ? 0 : _ref$left;
+  var _useState = React.useState((_initValues$top = initValues.top) !== null && _initValues$top !== void 0 ? _initValues$top : 10),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
     setTop = _useState2[1];
-  var _useState3 = React.useState(defaultLeft),
+  var _useState3 = React.useState((_initValues$left = initValues.left) !== null && _initValues$left !== void 0 ? _initValues$left : 10),
     _useState4 = _slicedToArray(_useState3, 2),
     left = _useState4[0],
     setLeft = _useState4[1];
-  var _useState5 = React.useState(defaultWidth),
+  var _useState5 = React.useState((_initValues$width = initValues.width) !== null && _initValues$width !== void 0 ? _initValues$width : 100),
     _useState6 = _slicedToArray(_useState5, 2),
     width = _useState6[0],
     setWidth = _useState6[1];
-  var _useState7 = React.useState(defaultHeight),
+  var _useState7 = React.useState((_initValues$height = initValues.height) !== null && _initValues$height !== void 0 ? _initValues$height : 100),
     _useState8 = _slicedToArray(_useState7, 2),
     height = _useState8[0],
     setHeight = _useState8[1];
@@ -841,11 +843,17 @@ function ResizableRect(_ref) {
     rotateAngle: rotateAngle
   });
   React.useEffect(function () {
-    setHeight(defaultHeight);
-  }, [defaultHeight]);
+    setHeight(propHeight);
+  }, [propHeight]);
   React.useEffect(function () {
-    setWidth(defaultWidth);
-  }, [defaultWidth]);
+    setWidth(propWidth);
+  }, [propWidth]);
+  React.useEffect(function () {
+    setTop(propTop);
+  }, [propTop]);
+  React.useEffect(function () {
+    setLeft(propLeft);
+  }, [propLeft]);
   var handleRotate = function handleRotate(angle, startAngle) {
     if (!onRotate) return;
     var rotateAngle = Math.round(startAngle + angle);
