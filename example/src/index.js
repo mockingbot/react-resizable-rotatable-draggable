@@ -58,12 +58,12 @@ class App extends PureComponent {
             onResize: this.handleResize,
             onDrag: this.handleDrag,
             focusChange: true,
-            defaultFocus: true
+            defaultFocus: true,
             // height: height,
             // width: width,
             // top: top,
             // left: left,
-            // initValues: { top: 10, left: 10, height: 100, width: 100 }
+            initValues: { top: 100, left: 100, height: 150, width: 100 }
             // haveBoundary: false,
             // color: 'red'
           }}

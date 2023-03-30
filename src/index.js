@@ -36,10 +36,10 @@ export default function ResizableRect({
   onFocusChange,
 
   initValues,
-  height: propHeight = 100,
-  width: propWidth = 100,
-  top: propTop = 0,
-  left: propLeft = 0
+  height: propHeight,
+  width: propWidth,
+  top: propTop,
+  left: propLeft
 }) {
   const [top, setTop] = useState(initValues?.top ?? 10)
   const [left, setLeft] = useState(initValues?.left ?? 10)
@@ -52,19 +52,27 @@ export default function ResizableRect({
   const styles = tLToCenter({ top, left, width, height, rotateAngle })
 
   useEffect(() => {
-    setHeight(propHeight)
+    if (propHeight) {
+      setHeight(propHeight)
+    }
   }, [propHeight])
 
   useEffect(() => {
-    setWidth(propWidth)
+    if (propWidth) {
+      setWidth(propWidth)
+    }
   }, [propWidth])
 
   useEffect(() => {
-    setTop(propTop)
+    if (propTop) {
+      setTop(propTop)
+    }
   }, [propTop])
 
   useEffect(() => {
-    setLeft(propLeft)
+    if (propLeft) {
+      setLeft(propLeft)
+    }
   }, [propLeft])
 
   const handleRotate = (angle, startAngle) => {
