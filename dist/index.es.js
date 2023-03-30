@@ -803,19 +803,19 @@ function ResizableRect(_ref) {
     propTop = _ref$top === void 0 ? 0 : _ref$top,
     _ref$left = _ref.left,
     propLeft = _ref$left === void 0 ? 0 : _ref$left;
-  var _useState = useState((_initValues$top = initValues.top) !== null && _initValues$top !== void 0 ? _initValues$top : 10),
+  var _useState = useState((_initValues$top = initValues === null || initValues === void 0 ? void 0 : initValues.top) !== null && _initValues$top !== void 0 ? _initValues$top : 10),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
     setTop = _useState2[1];
-  var _useState3 = useState((_initValues$left = initValues.left) !== null && _initValues$left !== void 0 ? _initValues$left : 10),
+  var _useState3 = useState((_initValues$left = initValues === null || initValues === void 0 ? void 0 : initValues.left) !== null && _initValues$left !== void 0 ? _initValues$left : 10),
     _useState4 = _slicedToArray(_useState3, 2),
     left = _useState4[0],
     setLeft = _useState4[1];
-  var _useState5 = useState((_initValues$width = initValues.width) !== null && _initValues$width !== void 0 ? _initValues$width : 100),
+  var _useState5 = useState((_initValues$width = initValues === null || initValues === void 0 ? void 0 : initValues.width) !== null && _initValues$width !== void 0 ? _initValues$width : 100),
     _useState6 = _slicedToArray(_useState5, 2),
     width = _useState6[0],
     setWidth = _useState6[1];
-  var _useState7 = useState((_initValues$height = initValues.height) !== null && _initValues$height !== void 0 ? _initValues$height : 100),
+  var _useState7 = useState((_initValues$height = initValues === null || initValues === void 0 ? void 0 : initValues.height) !== null && _initValues$height !== void 0 ? _initValues$height : 100),
     _useState8 = _slicedToArray(_useState7, 2),
     height = _useState8[0],
     setHeight = _useState8[1];

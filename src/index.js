@@ -41,10 +41,10 @@ export default function ResizableRect({
   top: propTop = 0,
   left: propLeft = 0
 }) {
-  const [top, setTop] = useState(initValues.top ?? 10)
-  const [left, setLeft] = useState(initValues.left ?? 10)
-  const [width, setWidth] = useState(initValues.width ?? 100)
-  const [height, setHeight] = useState(initValues.height ?? 100)
+  const [top, setTop] = useState(initValues?.top ?? 10)
+  const [left, setLeft] = useState(initValues?.left ?? 10)
+  const [width, setWidth] = useState(initValues?.width ?? 100)
+  const [height, setHeight] = useState(initValues?.height ?? 100)
   const [rotateAngle, setRotateAngle] = useState(defaultRotateAngle)
   // const [itemId, setItemId] = useState(uuidv4())
   const [itemId, setItemId] = useState(id)
