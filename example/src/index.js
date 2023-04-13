@@ -61,9 +61,9 @@ class App extends PureComponent {
             defaultFocus: true,
             // height: height,
             // width: width,
-            // top: top,
+            top: 0,
             // left: left,
-            initValues: { top: 100, left: 100, height: 150, width: 100 }
+            initValues: { top: 0, left: 0, height: 150, width: 100 }
             // haveBoundary: false,
             // color: 'red'
           }}
