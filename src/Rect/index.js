@@ -159,8 +159,19 @@ export default class Rect extends PureComponent {
       this._isMouseDown = false
       this.props.onResizeEnd && this.props.onResizeEnd()
     }
+
+    const onKeyDown = (e) => {
+      if (e.shiftKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+        const deltaL = e.key === 'ArrowUp' ? 1 : -1;
+        const alpha = 0;
+        const isShiftKey = true;
+        this.props.onResize(deltaL, alpha, rect, type, isShiftKey);
+      }
+    };
+    
     document.addEventListener('mousemove', onMove)
     document.addEventListener('mouseup', onUp)
+    document.addEventListener('keydown', onKeyDown);
   }
 
   render() {
