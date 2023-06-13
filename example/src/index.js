@@ -1,81 +1,64 @@
-import React, { PureComponent } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom/client'
 import ResizableRect from 'react-resizable-rotatable-draggable'
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props)
+const ZOOM_DIRECTIONS = "n, w, s, e, nw, ne, se, sw";
 
-    this.state = {
-      width: 100,
-      height: 100,
-      top: 100,
-      left: 100,
-      rotateAngle: 0
-    }
+const App = () => {
+  const [height, setHeight] = useState(100);
+  const [width, setWidth] = useState(100);
+  const [top, setTop] = useState(100);
+  const [left, setLeft] = useState(100);
+ 
+  const handleResize = (values) => {
+    setTop(Math.round(top));
+    setLeft(Math.round(left));
+    setWidth(Math.round(width));
+    setHeight(Math.round(height))
   }
 
-  handleResize = ({ top, left, width, height }, isShiftKey, type) => {
-    this.setState({
-      top: Math.round(top),
-      left: Math.round(left),
-      width: Math.round(width),
-      height: Math.round(height)
-    })
+
+  const handleDrag = (left, top) => {
+    setTop(top);
+    setLeft(left);
   }
 
-  handleRotate = (rotateAngle) => {
-    this.setState({ rotateAngle })
-  }
-
-  handleDrag = (left, top) => {
-    this.setState({
-      left: left,
-      top: top
-    })
-  }
-
-  render() {
-    const { top, left, width, height, rotateAngle } = this.state
     return (
-      <>
+      <div style={{height:'100vh', width: '100vw'}}>
         <button
-          onClick={() =>
-            this.setState({ height: 100, width: 100, top: 10, left: 10 })
-          }
+          onClick={() => {
+            setTop(10);
+            setLeft(10);
+            setWidth(150);
+            setHeight(150)
+          }}  
         >
           Update
         </button>
 
         <ResizableRect
-          {...{
-            // aspectRatio: 1,
-            // minWidth: -Infinity,
-            // minHeight: -Infinity,
-            zoomable: 'n, w, s, e, nw, ne, se, sw',
-            // rotatable: true,
-            // onRotate: this.handleRotate,
-            onResize: this.handleResize,
-            onDrag: this.handleDrag,
-            focusChange: true,
-            defaultFocus: true,
-            // height: height,
-            // width: width,
-            top: 0,
-            // left: left,
-            initValues: { top: 0, left: 0, height: 150, width: 100 }
-            // haveBoundary: false,
-            // color: 'red'
-          }}
+          zoomable={ZOOM_DIRECTIONS}
+          onResize={handleResize}
+          onDrag={handleDrag}
+          height={height}
+          width={width}
+          top={top}
+          left={left}
+          // initValues={{ top: 0, left: 0 }}
         >
           <div style={{ width: '100%', height: '100%', background: 'cyan' }} />
         </ResizableRect>
-      </>
+      </div>
     )
-  }
+  
 }
 
-const initExample = (rootElement = document.getElementById('root')) =>
-  ReactDOM.render(<App />, rootElement)
+const root = ReactDOM.createRoot(
+  document.getElementById("root")
+);
 
-export { initExample }
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
