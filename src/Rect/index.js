@@ -160,20 +160,41 @@ export default class Rect extends PureComponent {
       this.props.onResizeEnd && this.props.onResizeEnd()
     }
 
-    let shiftPlusArrowKeyPressCount = 1;
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
+
+  onArrowBasedResize = (e) => {
+    const {
+      styles: {
+        position: { centerX, centerY },
+        size: { width, height },
+        transform: { rotateAngle }
+      }
+    } = this.props
+    
+    const { clientX: startX, clientY: startY } = e
+    const rect = { width, height, centerX, centerY, rotateAngle }
+
+    let shiftPlusArrowKeyPressCount = 1; // resize by one pixel
 
     const onKeyDown = (e) => {
       if (e.shiftKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
         const deltaL = e.key === 'ArrowUp' ? ++shiftPlusArrowKeyPressCount : --shiftPlusArrowKeyPressCount;
         const alpha = 0;
         const isShiftKey = true;
-        this.props.onResize(deltaL, alpha, rect, type, isShiftKey);
+        this.props.onResize(deltaL, alpha, rect, 'r', isShiftKey);
       }
     };
-    
-    document.addEventListener('mousemove', onMove)
-    document.addEventListener('mouseup', onUp)
+
+    const onKeyUp = (e) => {
+      if (e.shiftKey) return;
+      document.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('keyup', onKeyUp)
+    }
+
     document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
   }
 
   render() {
@@ -224,6 +245,7 @@ export default class Rect extends PureComponent {
             tabIndex="0"
             onFocus={() => focusChange && this.setState({ isFocused: true })}
             onBlur={() => focusChange && this.setState({ isFocused: false })}
+            onMouseDown={this.onArrowBasedResize}
           >
             {rotatable && (
               <div className="rotate" onMouseDown={this.startRotate}>
@@ -275,6 +297,7 @@ export default class Rect extends PureComponent {
             onFocus={() => focusChange && this.setState({ isFocused: true })}
             onBlur={() => focusChange && this.setState({ isFocused: false })}
             tabIndex="0"
+            onMouseDown={this.onArrowBasedResize}
           >
             {children}
           </div>
