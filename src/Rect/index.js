@@ -176,11 +176,11 @@ export default class Rect extends PureComponent {
     const { clientX: startX, clientY: startY } = e
     const rect = { width, height, centerX, centerY, rotateAngle }
 
-    let shiftPlusArrowKeyPressCount = 1; // resize by one pixel
+    let shiftPlusArrowKeyPressCount = 0; 
 
     const onKeyDown = (e) => {
       if (e.shiftKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-        const deltaL = e.key === 'ArrowUp' ? ++shiftPlusArrowKeyPressCount : --shiftPlusArrowKeyPressCount;
+        const deltaL = e.key === 'ArrowUp' ? ++shiftPlusArrowKeyPressCount : --shiftPlusArrowKeyPressCount; // resize by one pixel
         const alpha = 0;
         const isShiftKey = true;
         this.props.onResize(deltaL, alpha, rect, 'r', isShiftKey);
