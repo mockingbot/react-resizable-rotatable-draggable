@@ -1,0 +1,25 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #000;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.app_container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.app_container__col_1 {
+    width: 75%;
+    background-color: #1a1a1a;
+}
+
+.app_container__col_2 {
+    width: 25%;
+    padding: 1rem;
+}
+

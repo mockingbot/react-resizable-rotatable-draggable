@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import ResizableRect from 'react-resizable-rotatable-draggable'
+import './index.css'
+import Properties from './components/Properties';
 
 const ZOOM_DIRECTIONS = "n, w, s, e, nw, ne, se, sw";
 
@@ -11,10 +13,10 @@ const App = () => {
   const [left, setLeft] = useState(100);
  
   const handleResize = (values) => {
-    setTop(Math.round(top));
-    setLeft(Math.round(left));
-    setWidth(Math.round(width));
-    setHeight(Math.round(height))
+    setTop(Math.round(values.top));
+    setLeft(Math.round(values.left));
+    setWidth(Math.round(values.width));
+    setHeight(Math.round(values.height))
   }
 
 
@@ -24,30 +26,44 @@ const App = () => {
   }
 
     return (
-      <div style={{height:'100vh', width: '100vw'}}>
-        <button
-          onClick={() => {
-            setTop(10);
-            setLeft(10);
-            setWidth(150);
-            setHeight(150)
-          }}  
-        >
-          Update
-        </button>
+      <div className="app_container">
+        <div className="app_container__col_1">
+          <ResizableRect
+            zoomable={ZOOM_DIRECTIONS}
+            onResize={handleResize}
+            onDrag={handleDrag}
+            height={height}
+            width={width}
+            top={top}
+            left={left}
+          >
+            <div style={{ width: '100%', height: '100%', background: 'cyan' }} />
+          </ResizableRect>
+        </div>
 
-        <ResizableRect
-          zoomable={ZOOM_DIRECTIONS}
-          onResize={handleResize}
-          onDrag={handleDrag}
-          height={height}
-          width={width}
-          top={top}
-          left={left}
-          // initValues={{ top: 0, left: 0 }}
-        >
-          <div style={{ width: '100%', height: '100%', background: 'cyan' }} />
-        </ResizableRect>
+        <div className="app_container__col_2">
+          <Properties
+            properties={[
+              {
+                name: 'Height',
+                value: height
+              },
+              {
+                name: 'Width',
+                value: width
+              },
+              {
+                name: 'Top',
+                value: top
+              },
+              {
+                name: 'Left',
+                value: left
+              },
+            ]}
+          />
+        </div>
+      
       </div>
     )
   
