@@ -245,7 +245,7 @@ export default class Rect extends PureComponent {
             tabIndex="0"
             onFocus={() => focusChange && this.setState({ isFocused: true })}
             onBlur={() => focusChange && this.setState({ isFocused: false })}
-            onMouseDown={this.onArrowBasedResize}
+            onClick={this.onArrowBasedResize}
           >
             {rotatable && (
               <div className="rotate" onMouseDown={this.startRotate}>
