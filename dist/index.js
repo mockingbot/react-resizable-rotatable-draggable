@@ -621,6 +621,41 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
       document.addEventListener('mousemove', onMove);
       document.addEventListener('mouseup', onUp);
     });
+    _defineProperty(_assertThisInitialized(_this), "onArrowBasedResize", function (e) {
+      var _this$props$styles2 = _this.props.styles,
+        _this$props$styles2$p = _this$props$styles2.position,
+        centerX = _this$props$styles2$p.centerX,
+        centerY = _this$props$styles2$p.centerY,
+        _this$props$styles2$s = _this$props$styles2.size,
+        width = _this$props$styles2$s.width,
+        height = _this$props$styles2$s.height,
+        rotateAngle = _this$props$styles2.transform.rotateAngle;
+      e.clientX;
+        e.clientY;
+      var rect = {
+        width: width,
+        height: height,
+        centerX: centerX,
+        centerY: centerY,
+        rotateAngle: rotateAngle
+      };
+      var shiftPlusArrowKeyPressCount = 0;
+      var onKeyDown = function onKeyDown(e) {
+        if (e.shiftKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+          var deltaL = e.key === 'ArrowUp' ? ++shiftPlusArrowKeyPressCount : --shiftPlusArrowKeyPressCount; // resize by one pixel
+          var alpha = 0;
+          var isShiftKey = true;
+          _this.props.onResize(deltaL, alpha, rect, 'r', isShiftKey);
+        }
+      };
+      var onKeyUp = function onKeyUp(e) {
+        if (e.shiftKey) return;
+        document.removeEventListener('keydown', onKeyDown);
+        document.removeEventListener('keyup', onKeyUp);
+      };
+      document.addEventListener('keydown', onKeyDown);
+      document.addEventListener('keyup', onKeyUp);
+    });
     _this.state = {
       isFocused: (_props$defaultFocus = props.defaultFocus) !== null && _props$defaultFocus !== void 0 ? _props$defaultFocus : false
     };
@@ -637,14 +672,14 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
     value: function render() {
       var _this2 = this;
       var _this$props = this.props,
-        _this$props$styles2 = _this$props.styles,
-        _this$props$styles2$p = _this$props$styles2.position,
-        centerX = _this$props$styles2$p.centerX,
-        centerY = _this$props$styles2$p.centerY,
-        _this$props$styles2$s = _this$props$styles2.size,
-        width = _this$props$styles2$s.width,
-        height = _this$props$styles2$s.height,
-        rotateAngle = _this$props$styles2.transform.rotateAngle,
+        _this$props$styles3 = _this$props.styles,
+        _this$props$styles3$p = _this$props$styles3.position,
+        centerX = _this$props$styles3$p.centerX,
+        centerY = _this$props$styles3$p.centerY,
+        _this$props$styles3$s = _this$props$styles3.size,
+        width = _this$props$styles3$s.width,
+        height = _this$props$styles3$s.height,
+        rotateAngle = _this$props$styles3.transform.rotateAngle,
         zoomable = _this$props.zoomable,
         rotatable = _this$props.rotatable,
         parentRotateAngle = _this$props.parentRotateAngle,
@@ -686,7 +721,8 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
           return focusChange && _this2.setState({
             isFocused: false
           });
-        }
+        },
+        onClick: this.onArrowBasedResize
       }, rotatable && /*#__PURE__*/React__default["default"].createElement("div", {
         className: "rotate",
         onMouseDown: this.startRotate
@@ -736,7 +772,8 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
             isFocused: false
           });
         },
-        tabIndex: "0"
+        tabIndex: "0",
+        onMouseDown: this.onArrowBasedResize
       }, children));
     }
   }]);
