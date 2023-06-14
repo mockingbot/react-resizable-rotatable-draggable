@@ -1,6 +1,6 @@
 {
   "name": "react-resizable-rotatable-draggable",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A rectangle react component which can be resized and rotated",
   "author": "MockingBot",
   "license": "MIT",
