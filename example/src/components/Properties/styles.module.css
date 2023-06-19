@@ -1,0 +1,18 @@
+.table {
+    color: #e5e5e5;
+    width: 100%;
+    text-align: center;
+}
+
+.header {
+    background-color: #333333;
+    height: 40px;
+}
+
+.rows {
+    height: 30px;
+}
+
+.rows:nth-child(odd) {
+    background-color: #1e1e1e;
+}

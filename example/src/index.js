@@ -1,81 +1,80 @@
-import React, { PureComponent } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom/client'
 import ResizableRect from 'react-resizable-rotatable-draggable'
+import './index.css'
+import Properties from './components/Properties';
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props)
+const ZOOM_DIRECTIONS = "n, w, s, e, nw, ne, se, sw";
 
-    this.state = {
-      width: 100,
-      height: 100,
-      top: 100,
-      left: 100,
-      rotateAngle: 0
-    }
+const App = () => {
+  const [height, setHeight] = useState(100);
+  const [width, setWidth] = useState(100);
+  const [top, setTop] = useState(100);
+  const [left, setLeft] = useState(100);
+ 
+  const handleResize = (values) => {
+    setTop(Math.round(values.top));
+    setLeft(Math.round(values.left));
+    setWidth(Math.round(values.width));
+    setHeight(Math.round(values.height))
   }
 
-  handleResize = ({ top, left, width, height }, isShiftKey, type) => {
-    this.setState({
-      top: Math.round(top),
-      left: Math.round(left),
-      width: Math.round(width),
-      height: Math.round(height)
-    })
+
+  const handleDrag = (left, top) => {
+    setTop(top);
+    setLeft(left);
   }
 
-  handleRotate = (rotateAngle) => {
-    this.setState({ rotateAngle })
-  }
-
-  handleDrag = (left, top) => {
-    this.setState({
-      left: left,
-      top: top
-    })
-  }
-
-  render() {
-    const { top, left, width, height, rotateAngle } = this.state
     return (
-      <>
-        <button
-          onClick={() =>
-            this.setState({ height: 100, width: 100, top: 10, left: 10 })
-          }
-        >
-          Update
-        </button>
+      <div className="app_container">
+        <div className="app_container__col_1">
+          <ResizableRect
+            zoomable={ZOOM_DIRECTIONS}
+            onResize={handleResize}
+            onDrag={handleDrag}
+            height={height}
+            width={width}
+            top={top}
+            left={left}
+          >
+            <div style={{ width: '100%', height: '100%', background: 'cyan' }} />
+          </ResizableRect>
+        </div>
 
-        <ResizableRect
-          {...{
-            // aspectRatio: 1,
-            // minWidth: -Infinity,
-            // minHeight: -Infinity,
-            zoomable: 'n, w, s, e, nw, ne, se, sw',
-            // rotatable: true,
-            // onRotate: this.handleRotate,
-            onResize: this.handleResize,
-            onDrag: this.handleDrag,
-            focusChange: true,
-            defaultFocus: true,
-            // height: height,
-            // width: width,
-            top: 0,
-            // left: left,
-            initValues: { top: 0, left: 0, height: 150, width: 100 }
-            // haveBoundary: false,
-            // color: 'red'
-          }}
-        >
-          <div style={{ width: '100%', height: '100%', background: 'cyan' }} />
-        </ResizableRect>
-      </>
+        <div className="app_container__col_2">
+          <Properties
+            properties={[
+              {
+                name: 'Height',
+                value: height
+              },
+              {
+                name: 'Width',
+                value: width
+              },
+              {
+                name: 'Top',
+                value: top
+              },
+              {
+                name: 'Left',
+                value: left
+              },
+            ]}
+          />
+        </div>
+      
+      </div>
     )
-  }
+  
 }
 
-const initExample = (rootElement = document.getElementById('root')) =>
-  ReactDOM.render(<App />, rootElement)
+const root = ReactDOM.createRoot(
+  document.getElementById("root")
+);
 
-export { initExample }
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
