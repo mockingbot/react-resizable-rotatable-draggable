@@ -16,10 +16,10 @@ body {
 .app_container__col_1 {
     width: 75%;
     background-color: #1a1a1a;
+    transform: scale(1.5);
 }
 
 .app_container__col_2 {
     width: 25%;
     padding: 1rem;
 }
-

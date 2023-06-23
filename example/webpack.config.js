@@ -11,8 +11,35 @@ const babelOption = {
 
 module.exports = {
   mode,
-  output: { path: join(__dirname, 'dist/'), filename: '[name].js', library: 'RRRD', libraryTarget: 'umd' },
+  output: {
+    path: join(__dirname, 'dist/'),
+    filename: '[name].js',
+    library: 'RRRD',
+    libraryTarget: 'umd'
+  },
   entry: { index: join(__dirname, 'src/index.js') },
-  module: { rules: [ { test: /\.js$/, use: { loader: 'babel-loader', options: babelOption } } ] },
-  plugins: [ new DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(mode), __DEV__: !isProduction }) ]
+  module: {
+    rules: [
+      { test: /\.js$/, use: { loader: 'babel-loader', options: babelOption } },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(mode),
+      __DEV__: !isProduction
+    })
+  ]
 }
