@@ -947,7 +947,7 @@ function ResizableRect(_ref) {
     onResize(values, isShiftKey, type);
   };
   var handleDrag = function handleDrag(deltaX, deltaY) {
-    if (!onDrag) return;
+    if (!isDraggable) return;
     var newLeft = left + deltaX;
     var newTop = top + deltaY;
     if (isOutOfBoundary(newLeft, newTop, width, height, haveBoundary, itemId)) {
