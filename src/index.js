@@ -141,7 +141,7 @@ export default function ResizableRect({
   }
 
   const handleDrag = (deltaX, deltaY) => {
-    if (!onDrag) return
+    if (!isDraggable) return
 
     const newLeft = left + deltaX
     const newTop = top + deltaY
