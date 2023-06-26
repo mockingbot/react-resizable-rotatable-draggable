@@ -679,8 +679,8 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         children = _this$props.children,
         color = _this$props.color,
         itemId = _this$props.itemId,
-        focusChange = _this$props.focusChange,
-        isDraggable = _this$props.isDraggable;
+        focusChange = _this$props.focusChange;
+        _this$props.isDraggable;
       var style = {
         width: isFocused ? Math.abs(width) : Math.abs(width) - 1,
         height: isFocused ? Math.abs(height) : Math.abs(height) - 1,
@@ -701,8 +701,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         onMouseDown: this.startDrag,
         className: "rect single-resizer",
         style: _objectSpread2(_objectSpread2({}, style), {}, {
-          borderColor: color,
-          position: isDraggable ? 'absolute' : 'relative'
+          borderColor: color
         }),
         tabIndex: "0",
         onFocus: function onFocus() {
@@ -751,9 +750,7 @@ var Rect = /*#__PURE__*/function (_PureComponent) {
         className: "childContainer"
       }, children)) : /*#__PURE__*/React.createElement("div", {
         id: itemId,
-        style: _objectSpread2(_objectSpread2({}, style), {}, {
-          position: isDraggable ? 'absolute' : 'relative'
-        }),
+        style: _objectSpread2({}, style),
         className: "childContainer",
         onFocus: function onFocus() {
           return focusChange && _this2.setState({
