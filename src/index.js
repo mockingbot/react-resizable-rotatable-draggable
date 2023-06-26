@@ -65,13 +65,13 @@ export default function ResizableRect({
   }, [propWidth])
 
   useEffect(() => {
-    if (propTop) {
+    if (propTop || propTop === 0) {
       setTop(propTop)
     }
   }, [propTop])
 
   useEffect(() => {
-    if (propLeft) {
+    if (propLeft || propLeft === 0) {
       setLeft(propLeft)
     }
   }, [propLeft])
