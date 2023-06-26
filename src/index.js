@@ -39,7 +39,8 @@ export default function ResizableRect({
   height: propHeight,
   width: propWidth,
   top: propTop,
-  left: propLeft
+  left: propLeft,
+  isDraggable: true
 }) {
   const [top, setTop] = useState(initValues?.top ?? 10)
   const [left, setLeft] = useState(initValues?.left ?? 10)
@@ -168,7 +169,7 @@ export default function ResizableRect({
       onRotateEnd={onRotateEnd}
       onDragStart={onDragStart}
       onDrag={handleDrag}
-      isDraggable={onDrag !== undefined}
+      isDraggable={isDraggable}
       onDragEnd={onDragEnd}
       children={children}
       color={color}
