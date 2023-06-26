@@ -842,7 +842,9 @@ function ResizableRect(_ref) {
     propHeight = _ref.height,
     propWidth = _ref.width,
     propTop = _ref.top,
-    propLeft = _ref.left;
+    propLeft = _ref.left,
+    _ref$isDraggable = _ref.isDraggable,
+    isDraggable = _ref$isDraggable === void 0 ? true : _ref$isDraggable;
   var _useState = React.useState((_initValues$top = initValues === null || initValues === void 0 ? void 0 : initValues.top) !== null && _initValues$top !== void 0 ? _initValues$top : 10),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
@@ -968,7 +970,7 @@ function ResizableRect(_ref) {
     onRotateEnd: onRotateEnd,
     onDragStart: onDragStart,
     onDrag: handleDrag,
-    isDraggable: onDrag !== undefined,
+    isDraggable: isDraggable,
     onDragEnd: onDragEnd,
     children: children,
     color: color,

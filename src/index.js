@@ -40,7 +40,7 @@ export default function ResizableRect({
   width: propWidth,
   top: propTop,
   left: propLeft,
-  isDraggable: true
+  isDraggable = true
 }) {
   const [top, setTop] = useState(initValues?.top ?? 10)
   const [left, setLeft] = useState(initValues?.left ?? 10)
