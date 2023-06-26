@@ -881,12 +881,12 @@ function ResizableRect(_ref) {
     }
   }, [propWidth]);
   useEffect(function () {
-    if (propTop) {
+    if (propTop || propTop === 0) {
       setTop(propTop);
     }
   }, [propTop]);
   useEffect(function () {
-    if (propLeft) {
+    if (propLeft || propLeft === 0) {
       setLeft(propLeft);
     }
   }, [propLeft]);

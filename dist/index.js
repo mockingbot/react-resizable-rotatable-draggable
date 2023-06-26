@@ -888,12 +888,12 @@ function ResizableRect(_ref) {
     }
   }, [propWidth]);
   React.useEffect(function () {
-    if (propTop) {
+    if (propTop || propTop === 0) {
       setTop(propTop);
     }
   }, [propTop]);
   React.useEffect(function () {
-    if (propLeft) {
+    if (propLeft || propLeft === 0) {
       setLeft(propLeft);
     }
   }, [propLeft]);
