@@ -239,7 +239,8 @@ export default class Rect extends PureComponent {
             className="rect single-resizer"
             style={{
               ...style,
-              borderColor: color
+              borderColor: color,
+              position: isDraggable ? 'absolute' : 'relative'
             }}
             tabIndex="0"
             onFocus={() => focusChange && this.setState({ isFocused: true })}
@@ -289,7 +290,8 @@ export default class Rect extends PureComponent {
           <div
             id={itemId}
             style={{
-              ...style
+              ...style,
+              position: isDraggable ? 'absolute' : 'relative'
             }}
             className="childContainer"
             onFocus={() => focusChange && this.setState({ isFocused: true })}
