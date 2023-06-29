@@ -101,8 +101,8 @@ export default function ResizableRect({
     if (!onResize) return
 
     const beta = alpha - degToRadian(rotateAngle + parentRotateAngle)
-    const deltaW = length * Math.cos(beta)
-    const deltaH = length * Math.sin(beta)
+    const deltaW = (length * Math.cos(beta)) / 1.5
+    const deltaH = (length * Math.sin(beta)) / 1.5
     const ratio =
       isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio
     const {

@@ -220,7 +220,6 @@ var sin = function sin(deg) {
   return Math.sin(degToRadian(deg));
 };
 var setWidthAndDeltaW = function setWidthAndDeltaW(width, deltaW, minWidth) {
-  deltaW = deltaW / 1.5;
   var expectedWidth = width + deltaW;
   if (expectedWidth > minWidth) {
     width = expectedWidth;
@@ -234,7 +233,6 @@ var setWidthAndDeltaW = function setWidthAndDeltaW(width, deltaW, minWidth) {
   };
 };
 var setHeightAndDeltaH = function setHeightAndDeltaH(height, deltaH, minHeight) {
-  deltaH = deltaH / 1.5;
   var expectedHeight = height + deltaH;
   if (expectedHeight > minHeight) {
     height = expectedHeight;
@@ -920,8 +918,8 @@ function ResizableRect(_ref) {
   var handleResize = function handleResize(length, alpha, rect, type, isShiftKey) {
     if (!onResize) return;
     var beta = alpha - degToRadian(rotateAngle + parentRotateAngle);
-    var deltaW = length * Math.cos(beta);
-    var deltaH = length * Math.sin(beta);
+    var deltaW = length * Math.cos(beta) / 1.5;
+    var deltaH = length * Math.sin(beta) / 1.5;
     var ratio = isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio;
     var _getNewStyle = getNewStyle(type, _objectSpread2(_objectSpread2({}, rect), {}, {
         rotateAngle: rotateAngle
