@@ -142,8 +142,8 @@ export default function ResizableRect({
   const handleDrag = (deltaX, deltaY) => {
     if (!onDrag) return
 
-    const newLeft = left + deltaX
-    const newTop = top + deltaY
+    const newLeft = Math.round(left + deltaX / 1.5)
+    const newTop = Math.round(top + deltaY / 1.5)
 
     if (isOutOfBoundary(newLeft, newTop, width, height, haveBoundary, itemId)) {
       return

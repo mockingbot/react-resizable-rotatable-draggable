@@ -939,8 +939,8 @@ function ResizableRect(_ref) {
   };
   var handleDrag = function handleDrag(deltaX, deltaY) {
     if (!onDrag) return;
-    var newLeft = left + deltaX;
-    var newTop = top + deltaY;
+    var newLeft = Math.round(left + deltaX / 1.5);
+    var newTop = Math.round(top + deltaY / 1.5);
     if (isOutOfBoundary(newLeft, newTop, width, height, haveBoundary, itemId)) {
       return;
     }
