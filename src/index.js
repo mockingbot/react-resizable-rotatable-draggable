@@ -39,7 +39,8 @@ export default function ResizableRect({
   height: propHeight,
   width: propWidth,
   top: propTop,
-  left: propLeft
+  left: propLeft,
+  scale = 1
 }) {
   const [top, setTop] = useState(initValues?.top ?? 10)
   const [left, setLeft] = useState(initValues?.left ?? 10)
@@ -101,8 +102,8 @@ export default function ResizableRect({
     if (!onResize) return
 
     const beta = alpha - degToRadian(rotateAngle + parentRotateAngle)
-    const deltaW = (length * Math.cos(beta)) / 1.5
-    const deltaH = (length * Math.sin(beta)) / 1.5
+    const deltaW = (length * Math.cos(beta)) / scale
+    const deltaH = (length * Math.sin(beta)) / scale
     const ratio =
       isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio
     const {
@@ -142,8 +143,8 @@ export default function ResizableRect({
   const handleDrag = (deltaX, deltaY) => {
     if (!onDrag) return
 
-    const newLeft = Math.round(left + deltaX / 1.5)
-    const newTop = Math.round(top + deltaY / 1.5)
+    const newLeft = Math.round(left + deltaX / scale)
+    const newTop = Math.round(top + deltaY / scale)
 
     if (isOutOfBoundary(newLeft, newTop, width, height, haveBoundary, itemId)) {
       return

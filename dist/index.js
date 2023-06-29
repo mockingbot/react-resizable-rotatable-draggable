@@ -842,7 +842,9 @@ function ResizableRect(_ref) {
     propHeight = _ref.height,
     propWidth = _ref.width,
     propTop = _ref.top,
-    propLeft = _ref.left;
+    propLeft = _ref.left,
+    _ref$scale = _ref.scale,
+    scale = _ref$scale === void 0 ? 1 : _ref$scale;
   var _useState = React.useState((_initValues$top = initValues === null || initValues === void 0 ? void 0 : initValues.top) !== null && _initValues$top !== void 0 ? _initValues$top : 10),
     _useState2 = _slicedToArray(_useState, 2),
     top = _useState2[0],
@@ -918,8 +920,8 @@ function ResizableRect(_ref) {
   var handleResize = function handleResize(length, alpha, rect, type, isShiftKey) {
     if (!onResize) return;
     var beta = alpha - degToRadian(rotateAngle + parentRotateAngle);
-    var deltaW = length * Math.cos(beta) / 1.5;
-    var deltaH = length * Math.sin(beta) / 1.5;
+    var deltaW = length * Math.cos(beta) / scale;
+    var deltaH = length * Math.sin(beta) / scale;
     var ratio = isShiftKey && !aspectRatio ? rect.width / rect.height : aspectRatio;
     var _getNewStyle = getNewStyle(type, _objectSpread2(_objectSpread2({}, rect), {}, {
         rotateAngle: rotateAngle
@@ -946,8 +948,8 @@ function ResizableRect(_ref) {
   };
   var handleDrag = function handleDrag(deltaX, deltaY) {
     if (!onDrag) return;
-    var newLeft = Math.round(left + deltaX / 1.5);
-    var newTop = Math.round(top + deltaY / 1.5);
+    var newLeft = Math.round(left + deltaX / scale);
+    var newTop = Math.round(top + deltaY / scale);
     if (isOutOfBoundary(newLeft, newTop, width, height, haveBoundary, itemId)) {
       return;
     }
