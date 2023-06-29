@@ -172,29 +172,32 @@ export default class Rect extends PureComponent {
         transform: { rotateAngle }
       }
     } = this.props
-    
+
     const { clientX: startX, clientY: startY } = e
     const rect = { width, height, centerX, centerY, rotateAngle }
 
-    let shiftPlusArrowKeyPressCount = 0; 
+    let shiftPlusArrowKeyPressCount = 0
 
     const onKeyDown = (e) => {
       if (e.shiftKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-        const deltaL = e.key === 'ArrowUp' ? ++shiftPlusArrowKeyPressCount : --shiftPlusArrowKeyPressCount; // resize by one pixel
-        const alpha = 0;
-        const isShiftKey = true;
-        this.props.onResize(deltaL, alpha, rect, 'r', isShiftKey);
+        const deltaL =
+          e.key === 'ArrowUp'
+            ? ++shiftPlusArrowKeyPressCount
+            : --shiftPlusArrowKeyPressCount // resize by one pixel
+        const alpha = 0
+        const isShiftKey = true
+        this.props.onResize(deltaL, alpha, rect, 'r', isShiftKey)
       }
-    };
+    }
 
     const onKeyUp = (e) => {
-      if (e.shiftKey) return;
+      if (e.shiftKey) return
       document.removeEventListener('keydown', onKeyDown)
       document.removeEventListener('keyup', onKeyUp)
     }
 
-    document.addEventListener('keydown', onKeyDown);
-    document.addEventListener('keyup', onKeyUp);
+    document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('keyup', onKeyUp)
   }
 
   render() {

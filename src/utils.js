@@ -13,6 +13,7 @@ const cos = (deg) => Math.cos(degToRadian(deg))
 const sin = (deg) => Math.sin(degToRadian(deg))
 
 const setWidthAndDeltaW = (width, deltaW, minWidth) => {
+  deltaW = deltaW / 1.5
   const expectedWidth = width + deltaW
   if (expectedWidth > minWidth) {
     width = expectedWidth
@@ -24,6 +25,7 @@ const setWidthAndDeltaW = (width, deltaW, minWidth) => {
 }
 
 const setHeightAndDeltaH = (height, deltaH, minHeight) => {
+  deltaH = deltaH / 1.5
   const expectedHeight = height + deltaH
   if (expectedHeight > minHeight) {
     height = expectedHeight
