@@ -836,8 +836,6 @@ function ResizableRect(_ref) {
     propWidth = _ref.width,
     propTop = _ref.top,
     propLeft = _ref.left,
-    _ref$isDraggable = _ref.isDraggable,
-    isDraggable = _ref$isDraggable === void 0 ? true : _ref$isDraggable,
     _ref$scale = _ref.scale,
     scale = _ref$scale === void 0 ? 1 : _ref$scale;
   var _useState = useState((_initValues$top = initValues === null || initValues === void 0 ? void 0 : initValues.top) !== null && _initValues$top !== void 0 ? _initValues$top : 10),
@@ -883,12 +881,12 @@ function ResizableRect(_ref) {
     }
   }, [propWidth]);
   useEffect(function () {
-    if (propTop || propTop === 0) {
+    if (propTop) {
       setTop(propTop);
     }
   }, [propTop]);
   useEffect(function () {
-    if (propLeft || propLeft === 0) {
+    if (propLeft) {
       setLeft(propLeft);
     }
   }, [propLeft]);
@@ -942,7 +940,7 @@ function ResizableRect(_ref) {
     onResize(values, isShiftKey, type);
   };
   var handleDrag = function handleDrag(deltaX, deltaY) {
-    if (!isDraggable) return;
+    if (!onDrag) return;
     var newLeft = Math.round(left + deltaX / scale);
     var newTop = Math.round(top + deltaY / scale);
     if (isOutOfBoundary(newLeft, newTop, width, height, haveBoundary, itemId)) {
@@ -965,7 +963,7 @@ function ResizableRect(_ref) {
     onRotateEnd: onRotateEnd,
     onDragStart: onDragStart,
     onDrag: handleDrag,
-    isDraggable: isDraggable,
+    isDraggable: onDrag !== undefined,
     onDragEnd: onDragEnd,
     children: children,
     color: color,
