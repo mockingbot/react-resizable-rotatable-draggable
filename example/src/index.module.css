@@ -14,12 +14,19 @@ body {
 }
 
 .app_container__col_1 {
-    width: 75%;
+    width: 75vw;
+    height: 100vh;
     background-color: #1a1a1a;
+    transform: scale(1.5);
+    position: absolute;
+    left: 60px;
+    top: 40px
 }
 
 .app_container__col_2 {
     width: 25%;
     padding: 1rem;
+    z-index: 1;
+    position: absolute;
+    right: 10px;
 }
-
