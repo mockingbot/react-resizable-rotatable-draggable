@@ -36,7 +36,8 @@ export default class Rect extends PureComponent {
     focusChange: PropTypes.bool,
     defaultFocus: PropTypes.bool,
     isDraggable: PropTypes.bool,
-    onFocusChange: PropTypes.func
+    onFocusChange: PropTypes.func,
+    zIndex: PropTypes.number
   }
 
   constructor(props) {
@@ -214,7 +215,8 @@ export default class Rect extends PureComponent {
       color,
       itemId,
       focusChange,
-      isDraggable
+      isDraggable,
+      zIndex
     } = this.props
 
     const style = {
@@ -243,7 +245,8 @@ export default class Rect extends PureComponent {
             style={{
               ...style,
               borderColor: color,
-              position: isDraggable ? 'absolute' : 'relative'
+              position: isDraggable ? 'absolute' : 'relative',
+              zIndex
             }}
             tabIndex="0"
             onFocus={() => focusChange && this.setState({ isFocused: true })}
