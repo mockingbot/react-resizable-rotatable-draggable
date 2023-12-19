@@ -1,5 +1,5 @@
 {
-  "name": "react-resizable-rotatable-draggable",
+  "name": "@sportvot/react-resizable-rotatable-draggable",
   "version": "1.0.0",
   "description": "A rectangle react component which can be resized and rotated",
   "author": "MockingBot",
