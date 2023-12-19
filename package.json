@@ -25,7 +25,9 @@
     "publish-dev": "npm publish --tag dev",
     "start": "npm run build-dev",
     "deploy": "npm run build && npm run build-example && gh-pages -d example/dist",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "release": "standard-version && git push --follow-tags",
+    "publish-package": "npm run build && npm publish"
   },
   "peerDependencies": {
     "prop-types": "^15",
@@ -59,5 +61,8 @@
   "files": [
     "dist"
   ],
-  "dependencies": {}
+  "dependencies": {},
+  "publishConfig": {
+    "@sportvot:registry": "https://npm.pkg.github.com"
+  }
 }
